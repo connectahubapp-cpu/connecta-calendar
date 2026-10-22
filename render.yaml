@@ -2,7 +2,7 @@
 # GAS_URL と SYNC_SECRET は画面で入れる (sync: false = ここには書かない)。
 services:
   - type: web
-    name: connecta-calendar
+    name: connectacalendar
     runtime: docker
     plan: free
     region: singapore
