@@ -127,6 +127,10 @@ func (a *App) handleLogin(w http.ResponseWriter, r *http.Request) {
 
 // ---- 画面用データ (データの版と日付が同じあいだは作り直さない) ----
 func (a *App) handleCalendar(w http.ResponseWriter, r *http.Request, u *User) {
+	if a.st.Empty() {
+		writeErr(w, 503, "データを準備しています。1分ほどしてから開き直してください")
+		return
+	}
 	p, err := a.payload()
 	if err != nil {
 		log.Printf("payload: %v", err)
@@ -275,7 +279,28 @@ func (a *App) handleSync(w http.ResponseWriter, r *http.Request) {
 	if ops == nil {
 		ops = []OutOp{}
 	}
-	writeJSON(w, 200, map[string]any{"ok": true, "ops": ops})
+	writeJSON(w, 200, map[string]any{"ok": true, "ops": ops, "needSnapshot": a.st.Empty()})
+}
+
+// ---- 起動直後に中身が空なら GAS に取りに行く (無料の置き場所では再起動で保存が消えることがある) ----
+func (a *App) warmUp() {
+	for i := 0; i < 10 && a.st.Empty(); i++ {
+		if a.cfg.GASURL == "" || a.cfg.SyncSecret == "" {
+			return
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		sn, err := a.gas.PullSnapshot(ctx)
+		cancel()
+		if err == nil {
+			err = a.st.ApplySnapshot(sn)
+		}
+		if err == nil {
+			log.Printf("warm-up: members=%d entries=%d busy=%d", len(sn.Members), len(sn.Entries), len(sn.Busy))
+			return
+		}
+		log.Printf("warm-up: %v", err)
+		time.Sleep(time.Minute)
+	}
 }
 
 // ---- 書き戻し: 追加・取り消しの直後に GAS へ頼む (失敗しても GAS の5分ごとの同期で届く) ----

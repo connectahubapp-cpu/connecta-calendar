@@ -1,4 +1,4 @@
-// connecta-calendar: 空き状況カレンダーのバックエンド (Fly.io)。
+// connecta-calendar: 空き状況カレンダーのバックエンド (Render)。
 //
 //	画面 (GitHub Pages) ──HTTP──▶ この Go ──SQLite (保存)
 //	                                  ▲  │
@@ -7,10 +7,10 @@
 // 環境変数:
 //
 //	PORT           待ち受けるポート (既定 8080)
-//	DB_PATH        SQLite のファイル (既定 ./calendar.db。Fly では /data/calendar.db)
+//	DB_PATH        SQLite のファイル (既定 ./calendar.db。消えても GAS から取り直す)
 //	GAS_URL        GAS ウェブアプリの /exec の URL (ログイン確認・書き戻し)
 //	SYNC_SECRET    GAS と共有する合言葉 (GAS の CALSYNC_SECRET と同じ)
-//	ALLOWED_ORIGIN 画面の置き場所 (例 https://issei8090-coder.github.io)。カンマ区切りで複数可
+//	ALLOWED_ORIGIN 画面の置き場所 (例 https://connectahubapp-cpu.github.io)。カンマ区切りで複数可
 //	MIN_RANK       見られる役職の下限 (既定 3 = マネージャー以上)
 package main
 
@@ -71,6 +71,7 @@ func main() {
 
 	app := &App{cfg: cfg, st: st, auth: NewAuth(cfg), gas: NewGAS(cfg)}
 	go app.outboxLoop()
+	go app.warmUp()
 
 	srv := &http.Server{
 		Addr:              ":" + cfg.Port,

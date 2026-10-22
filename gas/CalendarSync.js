@@ -2,15 +2,17 @@
 // (2026-10-22) 空き状況カレンダー (GitHub Pages + Go) との連携 — GAS の担当はここだけ
 // ============================================================================
 //  ■ 役割分担
-//    Go (Fly.io)   : 画面のデータを作る・予定の追加と取り消し・保存 (SQLite)。画面は GitHub Pages。
+//    Go (Render)   : 画面のデータを作る・予定の追加と取り消し・保存 (SQLite)。画面は GitHub Pages。
 //    GAS (この file): ① データが変わったら、シートの中身 (名簿・予定・休会・会議など) を Go へ送る
 //                     ② Go で追加・取り消した予定を schedule_entries に書き戻す (Console・フォームと同じ表に入る)
 //                     ③ ログインの確認は既存の authenticate / whoami をそのまま使う (変更なし)
 //  ■ 動くタイミング: leanSweep_ (5分ごと) の末尾の calendarSyncTick_。
 //    data_gen か日付が変わった・30分たった → 全部を送る。それ以外 → 書き戻し待ちが無いかだけ聞く (軽い)。
 //    Go は予定を追加した直後にも doPost (calendarSync.apply) で書き戻しを頼む。どちらで届いても結果は同じ (id で上書き)。
-//  ■ 初回: スクリプトのプロパティに CALSYNC_GO_URL (例 https://connecta-calendar.fly.dev) と
+//  ■ 初回: スクリプトのプロパティに CALSYNC_GO_URL (例 https://connecta-calendar.onrender.com) と
 //    CALSYNC_SECRET (Go の SYNC_SECRET と同じ長い文字列) を入れ、calendarSyncNow を1回実行。
+//  ■ Go の保存は消えることがある (無料の置き場所)。そのときは Go が起動直後に want:'snapshot' で取りに来るか、
+//    同期の応答 needSnapshot を見てすぐ全部を送る。Go で追加した予定は書き戻し済みなので、シートの GO- 行から戻る。
 //  ■ 理由・メール・連絡先は送らない。
 // ============================================================================
 
@@ -67,6 +69,7 @@ function _calSyncSend_(cfg, full) {
   try { out = JSON.parse(res.getContentText() || '{}') || {}; } catch (e) { out = {}; }
   var applied = _calSyncApplyOps_(out.ops || []);
   props.setProperty(CALSYNC_ACK_PROP_, JSON.stringify(applied));   // 前回の分は Go が受け取ったので入れ替える
+  if (!full && out.needSnapshot) return _calSyncSend_(cfg, true);  // Go の保存が空 (再起動で消えた等) → すぐ全部を送る
   return { ok: true, full: full, ops: (out.ops || []).length, ms: Date.now() - t0 };
 }
 
@@ -177,7 +180,10 @@ function calSyncDoPost_(body) {
   var out;
   if (!cfg.secret || String(body.secret || '') !== cfg.secret) out = { ok: false, error: 'forbidden' };
   else {
-    try { out = { ok: true, applied: _calSyncApplyOps_(body.ops || []) }; }
+    try {
+      out = { ok: true, applied: _calSyncApplyOps_(body.ops || []) };
+      if (body.want === 'snapshot') out.snapshot = _calSyncSnapshot_();   // Go が起動直後に空のとき取りに来る
+    }
     catch (e) { out = { ok: false, error: String(e && e.message || e) }; }
   }
   return ContentService.createTextOutput(JSON.stringify(out)).setMimeType(ContentService.MimeType.JSON);

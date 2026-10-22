@@ -55,7 +55,7 @@ func (g *GAS) do(ctx context.Context, method string, q url.Values, body interfac
 		return nil, err
 	}
 	defer res.Body.Close()
-	raw, _ := io.ReadAll(io.LimitReader(res.Body, 4<<20))
+	raw, _ := io.ReadAll(io.LimitReader(res.Body, 32<<20))
 	if res.StatusCode != 200 {
 		return nil, fmt.Errorf("GAS HTTP %d", res.StatusCode)
 	}
@@ -141,6 +141,27 @@ func (g *GAS) WhoAmI(ctx context.Context, memberID, token string) (*User, error)
 		return nil, nil
 	}
 	return u, nil
+}
+
+// PullSnapshot: シートの中身を GAS に取りに行く (起動直後に空のとき。GAS の5分ごとの送信を待たない)
+func (g *GAS) PullSnapshot(ctx context.Context) (*Snapshot, error) {
+	out, err := g.do(ctx, http.MethodPost, nil, map[string]interface{}{"action": "calendarSync.apply", "secret": g.secret, "ops": []OutOp{}, "want": "snapshot"})
+	if err != nil {
+		return nil, err
+	}
+	if ok, _ := out["ok"].(bool); !ok {
+		msg, _ := out["error"].(string)
+		return nil, fmt.Errorf("中身を取れません: %s", msg)
+	}
+	if out["snapshot"] == nil {
+		return nil, errors.New("GAS が中身を返しません (GAS を更新してください)")
+	}
+	b, _ := json.Marshal(out["snapshot"])
+	var sn Snapshot
+	if err := json.Unmarshal(b, &sn); err != nil {
+		return nil, err
+	}
+	return &sn, nil
 }
 
 // Apply: 書き戻しを頼む。適用された op の id が返る

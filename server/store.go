@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -181,18 +182,55 @@ func (s *Store) ApplySnapshot(sn *Snapshot) error {
 	}); err != nil {
 		return err
 	}
-	// 同じ id がここで追加したもの (source=go) にあれば、そちらを正とする (書き戻し済みの行が戻ってきただけ)
-	if err := ins(`INSERT OR IGNORE INTO entries(id,mid,kind,sd,ed,sm,em,all_day,rec,until,source,created_by) VALUES(?,?,?,?,?,?,?,?,?,?,'sheet',?)`, func(st *sql.Stmt) error {
+	// 同じ id がここで追加したもの (source=go) にあれば、そちらを正とする (書き戻し済みの行が戻ってきただけ)。
+	// GO- の行がこちらに無いとき (保存が消えた後など) は source=go として入れ直す → ここから取り消せる。
+	seen := map[string]bool{}
+	if err := ins(`INSERT OR IGNORE INTO entries(id,mid,kind,sd,ed,sm,em,all_day,rec,until,source,created_by,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)`, func(st *sql.Stmt) error {
+		now := time.Now().UTC().Format(time.RFC3339)
 		for _, e := range sn.Entries {
 			if e.ID == "" || !validYmd(e.SD) {
 				continue
 			}
-			if _, err := st.Exec(e.ID, e.Mid, normKind(e.Kind), e.SD, orYmd(e.ED, e.SD), e.SM, e.EM, b2i(e.AllDay), normRec(e.Rec), e.Until, e.By); err != nil {
+			seen[e.ID] = true
+			src := "sheet"
+			if strings.HasPrefix(e.ID, "GO-") {
+				src = "go"
+			}
+			if _, err := st.Exec(e.ID, e.Mid, normKind(e.Kind), e.SD, orYmd(e.ED, e.SD), e.SM, e.EM, b2i(e.AllDay), normRec(e.Rec), e.Until, src, e.By, now); err != nil {
 				return err
 			}
 		}
 		return nil
 	}); err != nil {
+		return err
+	}
+	// ここで追加した予定がシートから消えていたら (シートで手で消した等)、こちらも消す。
+	// 書き戻し待ちのものと、追加して間もないもの (この中身を作った後に書き戻されたかもしれない) は残す。
+	if err := func() error {
+		rs, err := tx.Query(`SELECT id, created_at FROM entries WHERE source='go' AND id NOT IN (SELECT entry_id FROM outbox WHERE done_at='')`)
+		if err != nil {
+			return err
+		}
+		var drop []string
+		cut := time.Now().Add(-45 * time.Minute)
+		for rs.Next() {
+			var id, at string
+			if err := rs.Scan(&id, &at); err != nil {
+				rs.Close()
+				return err
+			}
+			if t, err := time.Parse(time.RFC3339, at); !seen[id] && err == nil && t.Before(cut) {
+				drop = append(drop, id)
+			}
+		}
+		rs.Close()
+		for _, id := range drop {
+			if _, err := tx.Exec("DELETE FROM entries WHERE id=?", id); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
 		return err
 	}
 	if err := ins("INSERT INTO busy(mid,ymd,s,e,src,mode) VALUES(?,?,?,?,?,?)", func(st *sql.Stmt) error {
@@ -315,6 +353,13 @@ func (s *Store) Load() (*Data, error) {
 	}
 	_ = s.db.QueryRow("SELECT v FROM meta WHERE k='last_sync'").Scan(&d.LastSync)
 	return d, nil
+}
+
+// Empty: シートの中身をまだ受け取っていない (起動直後・保存が消えた後)
+func (s *Store) Empty() bool {
+	var n int
+	_ = s.db.QueryRow("SELECT COUNT(*) FROM members").Scan(&n)
+	return n == 0
 }
 
 func (s *Store) MemberExists(mid string) bool {
