@@ -5,38 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>空き状況</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Crect x=%222%22 y=%223%22 width=%2220%22 height=%2219%22 rx=%225%22 fill=%22%233D6F91%22/%3E%3Cpath d=%22M7 13l3 3 6-6%22 stroke=%22white%22 stroke-width=%222.4%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
-<meta name="theme-color" content="#3D6F91">
+<meta name="theme-color" content="#3A4745">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================================
    空き状況 — 青と白。上の青い面で「日を選ぶ」→ 下の白い面に「その日の人」が出る。
    スマホ = 下のタブ・下から出るパネル / PC = 上のタブ・右から出るパネル
    ============================================================================ */
 :root {
-  --blue: #3D6F91; --blue-d: #2C5574; --blue-dd: #1F3F57; --blue-50: #EEF4F8; --blue-100: #DCE8F0; --blue-200: #BFD4E2;
-  --accent: #F27C3E; --accent-50: #FDEBDF;
-  --ink: #1D2B36; --sub: #5D6B78; --faint: #9AA6B2; --line: #E4EAEF; --line2: #CAD5DE;
-  --bg: #F2F5F8; --card: #FFFFFF;
-  --sat: #3D6F91; --sun: #D2493A;
-  --past: #F1F3F5; --pastInk: #A7B0BA;
+  --pri: #3A4745; --pri-d: #313C3A; --pri-dd: #262F2E; --pri-l: #5E6A68; --pri-50: #EEEDE9; --pri-100: #E3E3DF; --pri-200: #C6C9C5;
+  --accent: #B3A393; --accent-d: #806C59; --accent-50: #F1EBE5; --accent-100: #EBE1D8; --accent-200: #DDCFC1; --accent-ink: #6A5847; --accent-lt: #E1D7CD;
+  --ink: #1A201F; --sub: #5F6463; --faint: #6E7372; --past-ink: #A3A6A5; --n-50: #F5F2EF; --n-100: #EDEAE7; --line: #E7E4E1; --line2: #D3D1CE;
+  --bg: #F5F1EC; --card: #FCFBFA;
+  --sat: var(--pri); --sun: #B5473A;
+  --past: var(--n-50); --pastInk: var(--past-ink);
   --ok: #E5F4EB; --okInk: #1D6B40; --ng: #FCEBE8; --ngInk: #A3301F; --warn: #FFF4DA; --warnInk: #7A4B00;
-  --r: 20px; --shadow: 0 2px 6px rgba(31, 63, 87, .05), 0 10px 24px rgba(31, 63, 87, .06);
-  --bar-h: 60px; --nav-h: 66px; --safe-b: env(safe-area-inset-bottom, 0px);
+  --r: 14px; --shadow: 0 0 0 1px var(--line), 0 1px 2px color-mix(in srgb, var(--pri-dd) 5%, transparent);
+  --f-disp: 'Cormorant Garamond', 'Shippori Mincho', serif; --f-head: 'Shippori Mincho', 'Yu Mincho', serif;
+  --bar-h: 60px; --nav-h: 60px; --safe-b: env(safe-area-inset-bottom, 0px);
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; background: var(--bg); color: var(--ink); }
-body { font-family: 'BIZ UDPGothic', 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', sans-serif; font-size: 15px; line-height: 1.6; -webkit-text-size-adjust: 100%; }
+body { font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', sans-serif; font-size: 15px; line-height: 1.6; -webkit-text-size-adjust: 100%; }
 button, select, input, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 .num { font-variant-numeric: tabular-nums; }
 [hidden] { display: none !important; }
-:focus-visible { outline: 3px solid #F6A77C; outline-offset: 2px; }
+:focus-visible { outline: 3px solid var(--accent-d); outline-offset: 2px; }
+.vhead :focus-visible, .appbar :focus-visible { outline-color: #fff; }
 .wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
 
 /* ---- 上のバー (青) ---- */
-.appbar { position: sticky; top: 0; z-index: 30; background: var(--blue); color: #fff; }
+.appbar { position: sticky; top: 0; z-index: 30; background: var(--pri); color: #fff; }
 .appbar .wrap { height: var(--bar-h); display: flex; align-items: center; gap: 14px; }
 .logo { display: flex; align-items: center; gap: 10px; flex: none; }
 .logo-mk { width: 34px; height: 34px; border-radius: 11px; background: rgba(255,255,255,.16); display: grid; place-items: center; }
@@ -47,7 +49,7 @@ button { cursor: pointer; }
 .topnav { display: flex; gap: 4px; margin: 0 auto; }
 .topnav button { border: 0; background: none; height: 40px; padding: 0 16px; border-radius: 20px; color: rgba(255,255,255,.82); font-size: 14px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 .topnav button:hover { background: rgba(255,255,255,.12); color: #fff; }
-.topnav button[aria-current="page"] { background: #fff; color: var(--blue-d); font-weight: 700; }
+.topnav button[aria-current="page"] { background: var(--card); color: var(--pri-d); font-weight: 700; }
 .topnav svg { width: 18px; height: 18px; }
 .acts { display: flex; gap: 8px; margin-left: auto; flex: none; }
 .hbtn { height: 38px; padding: 0 12px; border-radius: 19px; border: 0; background: rgba(255,255,255,.14); color: #fff; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; }
@@ -55,10 +57,10 @@ button { cursor: pointer; }
 .hbtn svg { width: 18px; height: 18px; }
 .hbtn.spin svg { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.badge { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; line-height: 1; }
+.badge { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent-d); color: #fff; font-size: 11px; font-weight: 700; line-height: 1; }
 
 /* ---- 各画面の上の青い面 ---- */
-.vhead { background: var(--blue); color: #fff; border-radius: 0 0 32px 32px; padding: 6px 0 22px; }
+.vhead { background: var(--pri); color: #fff; border-radius: 0 0 32px 32px; padding: 6px 0 22px; }
 .vh-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .vh-title { font-size: 22px; font-weight: 700; letter-spacing: .02em; flex: 1; min-width: 0; }
 .vh-title small { display: block; font-size: 13px; font-weight: 400; color: rgba(255,255,255,.75); letter-spacing: 0; }
@@ -71,9 +73,9 @@ button { cursor: pointer; }
 .dchips::-webkit-scrollbar { display: none; }
 .dchip { flex: none; height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid rgba(255,255,255,.28); background: transparent; color: #fff; font-size: 13px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
 .dchip:hover { background: rgba(255,255,255,.1); }
-.dchip[aria-pressed="true"] { background: #fff; color: var(--blue-d); border-color: #fff; font-weight: 700; }
+.dchip[aria-pressed="true"] { background: var(--card); color: var(--pri-d); border-color: var(--card); font-weight: 700; }
 .dchip svg { width: 16px; height: 16px; }
-.dchip .badge { background: var(--accent); }
+.dchip .badge { background: var(--accent-d); }
 .fnote { margin-top: 8px; font-size: 12px; color: rgba(255,255,255,.8); }
 .fnote button { border: 0; background: none; color: #fff; text-decoration: underline; font-size: 12px; padding: 0 4px; }
 
@@ -87,7 +89,7 @@ main { padding-bottom: 48px; }
 .sec-h .hint { color: var(--faint); font-size: 12px; }
 .card { background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); }
 .empty { padding: 30px 16px; text-align: center; color: var(--faint); font-size: 14px; }
-.empty svg { display: block; margin: 0 auto 8px; width: 34px; height: 34px; color: var(--blue-200); }
+.empty svg { display: block; margin: 0 auto 8px; width: 34px; height: 34px; color: var(--pri-200); }
 .muted { color: var(--sub); } .faint { color: var(--faint); }
 
 /* 記号・人 */
@@ -100,102 +102,59 @@ main { padding-bottom: 48px; }
 .pm { flex: 1; min-width: 0; line-height: 1.4; }
 .pm b { display: block; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pm small { display: block; color: var(--faint); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.grp { padding: 12px 18px 8px; font-size: 12px; font-weight: 700; color: var(--blue-d); display: flex; gap: 8px; align-items: center; border-top: 1px solid var(--line); background: var(--blue-50); }
+.grp { padding: 12px 18px 8px; font-size: 12px; font-weight: 700; color: var(--pri-d); display: flex; gap: 8px; align-items: center; border-top: 1px solid var(--line); background: var(--pri-50); }
 .grp:first-child { border-top: 0; border-radius: var(--r) var(--r) 0 0; }
 .grp .sp { flex: 1; }
 
-/* ---- 今日: 週の日付チップ ---- */
-.wstrip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
-.wc { border: 0; border-radius: 18px; background: rgba(255,255,255,.12); color: #fff; padding: 10px 0 9px; display: flex; flex-direction: column; align-items: center; gap: 1px; position: relative; }
-.wc:hover { background: rgba(255,255,255,.2); }
-.wc .d { font-size: 20px; font-weight: 700; line-height: 1.2; }
-.wc .w { font-size: 12px; opacity: .85; }
-.wc .c { font-size: 11px; margin-top: 3px; padding: 0 7px; border-radius: 9px; background: rgba(255,255,255,.16); }
-.wc.past { opacity: .55; }
-.wc.today::after { content: ''; position: absolute; top: 7px; right: 9px; width: 7px; height: 7px; border-radius: 4px; background: var(--accent); }
-.wc[aria-pressed="true"] { background: #fff; color: var(--blue-d); opacity: 1; box-shadow: 0 6px 16px rgba(13, 35, 52, .2); }
-.wc[aria-pressed="true"] .c { background: var(--blue-50); color: var(--blue-d); font-weight: 700; }
-.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.stat { padding: 14px 16px; }
-.stat .k { font-size: 12px; color: var(--sub); }
-.stat .v { font-size: 26px; font-weight: 700; line-height: 1.3; }
-.stat .v small { font-size: 13px; font-weight: 400; color: var(--faint); margin-left: 2px; }
-.stat.blue .v { color: var(--blue); } .stat.org .v { color: var(--accent); }
-.notice { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border: 0; width: 100%; text-align: left; background: var(--accent-50); color: #8A3A10; border-radius: 16px; font-size: 14px; }
-.notice b { font-size: 15px; }
-.notice svg { width: 20px; height: 20px; flex: none; }
-.notice .go { margin-left: auto; font-weight: 700; white-space: nowrap; }
-.two { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px; align-items: start; }
-/* 棒グラフ (今週) */
-.bars { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; padding: 18px 14px 12px; align-items: end; }
-.bc { border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0; }
-.bc .val { font-size: 12px; font-weight: 700; color: var(--sub); }
-.bc .track { width: 100%; max-width: 34px; height: 120px; border-radius: 17px; background: var(--blue-50); display: flex; align-items: flex-end; overflow: hidden; }
-.bc .fill { width: 100%; border-radius: 17px; background: var(--blue-200); transition: height .3s; }
-.bc .lb { font-size: 12px; color: var(--faint); line-height: 1.3; text-align: center; }
-.bc[aria-pressed="true"] .fill { background: var(--blue); }
-.bc[aria-pressed="true"] .val { color: var(--blue-d); }
-.bc[aria-pressed="true"] .lb { color: var(--blue-d); font-weight: 700; }
-.bc.past .fill { background: #DDE3E9; }
-/* 部署ごとの横棒 */
-.hbars { padding: 6px 18px 14px; }
-.hb { display: grid; grid-template-columns: 96px minmax(0, 1fr) 54px; gap: 10px; align-items: center; padding: 9px 0; font-size: 13px; border: 0; background: none; width: 100%; text-align: left; }
-.hb .t { height: 10px; border-radius: 5px; background: var(--blue-50); overflow: hidden; }
-.hb .t i { display: block; height: 100%; border-radius: 5px; background: var(--blue); }
-.hb .t i.low { background: var(--accent); }
-.hb .n { text-align: right; font-weight: 700; }
-.hb .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ---- カレンダー (青い面の中の月) ---- */
 .mgrid-dow { display: grid; grid-template-columns: repeat(7, 1fr); margin-top: 14px; }
-.mgrid-dow div { text-align: center; font-size: 12px; color: rgba(255,255,255,.7); padding: 4px 0; }
+.mgrid-dow div { text-align: center; font-size: 12px; color: rgba(255,255,255,.85); padding: 4px 0; }
 .mgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px 0; }
-.mc { border: 0; background: none; color: #fff; height: 56px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0 0; position: relative; }
+.mc { border: 0; background: none; color: #fff; height: 58px; display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 3px 0 0; position: relative; }
+.mc .oc { font-size: 11px; line-height: 16px; height: 16px; color: var(--accent-lt); font-weight: 700; }
+.mc.past .oc { color: rgba(255,255,255,.5); font-weight: 400; }
+.mc.picked .oc { color: #fff; }
 .mc .n { width: 36px; height: 36px; border-radius: 13px; display: grid; place-items: center; font-size: 15px; font-weight: 700; }
 .mc:hover .n { background: rgba(255,255,255,.12); }
 .mc.out { visibility: hidden; }
 .mc.past .n { color: rgba(255,255,255,.45); font-weight: 400; }
-.mc.today .n { box-shadow: inset 0 0 0 2px var(--accent); }
-.mc.picked .n { background: #fff; color: var(--blue-d); box-shadow: 0 4px 12px rgba(13,35,52,.25); }
-.mc.picked.today .n { background: var(--accent); color: #fff; }
-.mc .dots { display: flex; gap: 3px; height: 6px; }
-.mc .dots i { width: 6px; height: 6px; border-radius: 3px; }
-.mc .cnt { position: absolute; top: 0; right: calc(50% - 26px); min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--accent); color: #fff; font-size: 10px; font-weight: 700; display: grid; place-items: center; line-height: 1; }
-.mc.past .cnt { background: rgba(255,255,255,.25); }
-.mlegend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.8); }
-.mlegend i { display: inline-block; width: 8px; height: 8px; border-radius: 4px; margin-right: 5px; vertical-align: 1px; }
+.mc.today .n { box-shadow: inset 0 0 0 2px var(--accent-lt); }
+.mc.picked .n { background: var(--card); color: var(--pri-d); box-shadow: 0 4px 12px color-mix(in srgb, var(--pri-dd) 25%, transparent); }
+.mc.picked.today .n { background: var(--card); color: var(--pri-d); box-shadow: inset 0 0 0 2px var(--accent), 0 4px 12px color-mix(in srgb, var(--pri-dd) 25%, transparent); }
+.mlegend { margin-top: 10px; font-size: 12px; color: rgba(255,255,255,.88); text-align: right; }
 .mcal { display: grid; grid-template-columns: minmax(0, 1fr); }
 .dayhead { display: flex; align-items: center; gap: 10px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
 .dayhead b { font-size: 17px; flex: 1; }
 .dayhead small { display: block; font-size: 12px; color: var(--faint); font-weight: 400; }
 .daynav { display: flex; gap: 6px; }
-.daynav button { width: 36px; height: 36px; border-radius: 12px; border: 1px solid var(--line); background: #fff; color: var(--sub); display: grid; place-items: center; }
-.daynav button:hover { background: var(--blue-50); }
+.daynav button { width: 36px; height: 36px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); color: var(--sub); display: grid; place-items: center; }
+.daynav button:hover { background: var(--pri-50); }
 .daynav svg { width: 18px; height: 18px; }
 
 /* ---- メンバー×日付 ---- */
 .mx-wrap { overflow: auto; -webkit-overflow-scrolling: touch; max-height: calc(100vh - 280px); min-height: 280px; border-radius: var(--r); background: var(--card); box-shadow: var(--shadow); }
 table.mx { border-collapse: separate; border-spacing: 0; font-size: 12px; }
 table.mx th, table.mx td { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0; height: 36px; min-width: 34px; width: 34px; text-align: center; white-space: nowrap; }
-table.mx thead th { position: sticky; background: #fff; z-index: 3; color: var(--sub); font-weight: 700; }
+table.mx thead th { position: sticky; background: var(--card); z-index: 3; color: var(--sub); font-weight: 700; }
 table.mx thead tr:nth-child(1) th { top: 0; height: 32px; text-align: left; padding-left: 12px; color: var(--ink); font-size: 13px; }
 table.mx thead tr:nth-child(2) th { top: 32px; height: 28px; }
 table.mx thead tr:nth-child(3) th { top: 60px; height: 24px; font-weight: 400; font-size: 11px; border-bottom: 1px solid var(--line2); }
-table.mx .nm { position: sticky; left: 0; z-index: 2; background: #fff; text-align: left; padding: 0 14px; min-width: 160px; width: 160px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; border-right: 1px solid var(--line2); font-size: 13px; }
+table.mx .nm { position: sticky; left: 0; z-index: 2; background: var(--card); text-align: left; padding: 0 14px; min-width: 160px; width: 160px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; border-right: 1px solid var(--line2); font-size: 13px; }
 table.mx thead .nm { z-index: 4; }
 table.mx .nm .r { color: var(--faint); font-size: 11px; margin-left: 6px; }
-table.mx .gr td { background: var(--blue-50); font-weight: 700; font-size: 11px; }
-table.mx .gr .nm { background: var(--blue-50); color: var(--blue-d); }
+table.mx .gr td { background: var(--pri-50); font-weight: 700; font-size: 11px; }
+table.mx .gr .nm { background: var(--pri-50); color: var(--pri-d); }
 table.mx .gr .nm span { color: var(--sub); font-weight: 400; margin-left: 6px; font-size: 11px; }
-table.mx td.we { background: #FAFBFC; }
+table.mx td.we { background: var(--n-50); }
 table.mx td.past { background: var(--past); }
-table.mx td.tcol { background: #FFF6F0; }
+table.mx td.tcol { background: var(--accent-50); }
 table.mx th.tcol span { display: inline-grid; place-items: center; min-width: 24px; height: 22px; border-radius: 8px; background: var(--accent); color: #fff; padding: 0 4px; }
 table.mx th.sat { color: var(--sat); } table.mx th.sun { color: var(--sun); }
 table.mx th.past { color: var(--pastInk); }
 table.mx td.mk { font-weight: 700; cursor: pointer; }
 table.mx td.mk.light { font-weight: 400; }
-table.mx td.mk.pastmk { background: #E9EDF1 !important; color: var(--pastInk) !important; font-weight: 400; }
+table.mx td.mk.pastmk { background: var(--n-100) !important; color: var(--pastInk) !important; font-weight: 400; }
 table.mx .mstart { border-left: 2px solid var(--line2); }
 .mx-hint { display: flex; justify-content: space-between; gap: 10px; margin: 10px 4px 0; font-size: 12px; color: var(--faint); flex-wrap: wrap; }
 
@@ -203,7 +162,7 @@ table.mx .mstart { border-left: 2px solid var(--line2); }
 .seg { display: flex; background: rgba(255,255,255,.14); border-radius: 18px; padding: 4px; gap: 4px; margin-top: 14px; max-width: 460px; }
 .seg button { flex: 1; border: 0; background: none; height: 44px; border-radius: 14px; font-size: 14px; color: #fff; white-space: nowrap; padding: 0 8px; }
 .seg button small { display: block; font-size: 10px; opacity: .8; line-height: 1.1; }
-.seg button[aria-pressed="true"] { background: #fff; color: var(--blue-d); font-weight: 700; box-shadow: 0 4px 12px rgba(13,35,52,.18); }
+.seg button[aria-pressed="true"] { background: var(--card); color: var(--pri-d); font-weight: 700; box-shadow: 0 4px 12px color-mix(in srgb, var(--pri-dd) 18%, transparent); }
 .tool { display: grid; grid-template-columns: 370px minmax(0, 1fr); gap: 24px; align-items: start; }
 details.cond { position: sticky; top: calc(var(--bar-h) + 16px); }
 details.cond > summary { list-style: none; cursor: pointer; padding: 16px 18px; display: flex; align-items: center; gap: 12px; }
@@ -211,8 +170,8 @@ details.cond > summary::-webkit-details-marker { display: none; }
 details.cond > summary .ct { flex: 1; min-width: 0; }
 details.cond > summary .ct b { display: block; font-size: 15px; }
 details.cond > summary .ct small { display: block; color: var(--sub); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-details.cond > summary .chg { flex: none; height: 36px; padding: 0 14px; border-radius: 18px; background: var(--blue); color: #fff; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
-details.cond[open] > summary .chg { background: var(--blue-50); color: var(--blue-d); }
+details.cond > summary .chg { flex: none; height: 36px; padding: 0 14px; border-radius: 18px; background: var(--pri); color: #fff; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+details.cond[open] > summary .chg { background: var(--pri-50); color: var(--pri-d); }
 details.cond[open] > summary .chg .o { display: none; }
 details.cond:not([open]) > summary .chg .c { display: none; }
 .cond-b { padding: 2px 18px 20px; border-top: 1px solid var(--line); }
@@ -221,39 +180,39 @@ details.cond:not([open]) > summary .chg .c { display: none; }
 .field .row { display: flex; gap: 8px; align-items: center; }
 .field .row > * { min-width: 0; }
 .field .help { font-size: 12px; color: var(--faint); margin-top: 5px; }
-.inp, .sel { height: 46px; border: 1px solid var(--line2); border-radius: 14px; background: #fff; padding: 0 14px; min-width: 0; width: 100%; font-size: 15px; }
+.inp, .sel { height: 46px; border: 1px solid var(--line2); border-radius: 14px; background: var(--card); padding: 0 14px; min-width: 0; width: 100%; font-size: 15px; }
 .sel { appearance: none; -webkit-appearance: none; padding-right: 36px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235D6B78' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
-.inp:focus, .sel:focus { outline: 0; border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-100); }
+.inp:focus, .sel:focus { outline: 0; border-color: var(--pri); box-shadow: 0 0 0 3px var(--pri-100); }
 .tilde { color: var(--faint); flex: none; }
 .chk { display: flex; gap: 10px; align-items: center; font-size: 14px; cursor: pointer; min-height: 46px; }
-.chk input { width: 22px; height: 22px; accent-color: var(--blue); flex: none; }
+.chk input { width: 22px; height: 22px; accent-color: var(--pri); flex: none; }
 .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 6px; }
-.opts button { height: 46px; border-radius: 14px; border: 1px solid var(--line2); background: #fff; font-size: 14px; white-space: nowrap; padding: 0 6px; }
-.opts button:hover { border-color: var(--blue-200); background: var(--blue-50); }
-.opts button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 700; }
+.opts button { height: 46px; border-radius: 14px; border: 1px solid var(--line2); background: var(--card); font-size: 14px; white-space: nowrap; padding: 0 6px; }
+.opts button:hover { border-color: var(--pri-200); background: var(--pri-50); }
+.opts button[aria-pressed="true"] { background: var(--pri); border-color: var(--pri); color: #fff; font-weight: 700; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
 .chips:empty { display: none; }
-.chip { display: inline-flex; align-items: center; gap: 2px; height: 34px; padding: 0 4px 0 12px; border-radius: 17px; background: var(--blue-50); color: var(--blue-d); font-size: 13px; font-weight: 700; }
-.chip button { border: 0; background: none; width: 28px; height: 28px; border-radius: 14px; color: var(--blue-d); padding: 0; font-size: 16px; line-height: 1; }
-.chip button:hover { background: var(--blue-100); }
+.chip { display: inline-flex; align-items: center; gap: 2px; height: 34px; padding: 0 4px 0 12px; border-radius: 17px; background: var(--pri-50); color: var(--pri-d); font-size: 13px; font-weight: 700; }
+.chip button { border: 0; background: none; width: 28px; height: 28px; border-radius: 14px; color: var(--pri-d); padding: 0; font-size: 16px; line-height: 1; }
+.chip button:hover { background: var(--pri-100); }
 .sum { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 4px 12px; }
-.sum .s { background: #fff; border-radius: 14px; padding: 4px 12px; font-size: 12px; color: var(--sub); box-shadow: 0 1px 3px rgba(31,63,87,.06); }
+.sum .s { background: var(--card); border-radius: 14px; padding: 4px 12px; font-size: 12px; color: var(--sub); box-shadow: 0 1px 3px color-mix(in srgb, var(--pri-dd) 6%, transparent); }
 .sum .s b { color: var(--ink); }
 .sum .s.w { background: var(--warn); color: var(--warnInk); }
 .rc { padding: 16px 18px; border-top: 1px solid var(--line); }
 .rc:first-child { border-top: 0; }
-.rc.best { background: linear-gradient(90deg, #EEF7F2, #fff 70%); }
+.rc.best { background: linear-gradient(90deg, var(--pri-50), #fff 70%); }
 .rc-top { display: flex; align-items: center; gap: 12px; }
 .rc .dt { min-width: 104px; font-weight: 700; font-size: 15px; line-height: 1.3; }
 .rc .dt small { display: block; font-weight: 400; color: var(--sub); font-size: 12px; }
 .rc .dt.sat { color: var(--sat); } .rc .dt.sun { color: var(--sun); }
-.rank { width: 36px; height: 36px; border-radius: 12px; background: var(--blue-50); color: var(--blue-d); display: grid; place-items: center; font-weight: 700; flex: none; }
+.rank { width: 36px; height: 36px; border-radius: 12px; background: var(--pri-50); color: var(--pri-d); display: grid; place-items: center; font-weight: 700; flex: none; }
 .rc.best .rank { background: var(--accent); color: #fff; }
 .meter { flex: 1; display: flex; align-items: center; gap: 10px; min-width: 0; }
 .meter .mv { font-weight: 700; white-space: nowrap; font-size: 14px; }
-.meter .mt { flex: 1; height: 10px; border-radius: 5px; background: var(--blue-50); overflow: hidden; min-width: 40px; }
-.meter .mt i { display: block; height: 100%; background: var(--blue-200); border-radius: 5px; }
-.rc.best .meter .mt i { background: var(--blue); }
+.meter .mt { flex: 1; height: 10px; border-radius: 5px; background: var(--pri-50); overflow: hidden; min-width: 40px; }
+.meter .mt i { display: block; height: 100%; background: var(--pri-200); border-radius: 5px; }
+.rc.best .meter .mt i { background: var(--pri); }
 .rc-who { margin-top: 10px; font-size: 13px; line-height: 1.8; }
 .rc-who .lb { display: inline-block; font-size: 11px; font-weight: 700; color: var(--sub); background: var(--past); border-radius: 6px; padding: 0 7px; margin-right: 6px; }
 .rc-who .warn .lb { background: var(--warn); color: var(--warnInk); }
@@ -263,10 +222,10 @@ details.cond:not([open]) > summary .chg .c { display: none; }
 .rc-pills { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
 .linebox { margin-top: 16px; overflow: hidden; }
 .linebox .lh { display: flex; align-items: center; gap: 8px; padding: 12px 12px 12px 18px; border-bottom: 1px solid var(--line); font-weight: 700; font-size: 14px; }
-.linebox textarea { display: block; width: 100%; border: 0; padding: 14px 18px; resize: vertical; min-height: 150px; font-size: 14px; line-height: 1.8; background: #fff; }
-.btn { height: 42px; padding: 0 18px; border-radius: 21px; border: 1px solid var(--line2); background: #fff; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.linebox textarea { display: block; width: 100%; border: 0; padding: 14px 18px; resize: vertical; min-height: 150px; font-size: 14px; line-height: 1.8; background: var(--card); }
+.btn { height: 42px; padding: 0 18px; border-radius: 21px; border: 1px solid var(--line2); background: var(--card); font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .btn.line { background: #06C755; border-color: #06C755; color: #fff; }
-.btn.pri { background: var(--blue); border-color: var(--blue); color: #fff; }
+.btn.pri { background: var(--pri); border-color: var(--pri); color: #fff; }
 .btn svg { width: 18px; height: 18px; }
 
 /* ---- 申請 ---- */
@@ -274,28 +233,28 @@ details.cond:not([open]) > summary .chg .c { display: none; }
 .rq { padding: 16px 18px; }
 .rq-top { display: flex; align-items: center; gap: 12px; }
 .rq .meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
-.rq .meta div { background: var(--blue-50); border-radius: 12px; padding: 8px 10px; font-size: 12px; color: var(--sub); line-height: 1.4; }
+.rq .meta div { background: var(--pri-50); border-radius: 12px; padding: 8px 10px; font-size: 12px; color: var(--sub); line-height: 1.4; }
 .rq .meta b { display: block; color: var(--ink); font-size: 13px; }
 
 /* ---- 下のタブ (スマホ) ---- */
-.botnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: #fff; box-shadow: 0 -4px 20px rgba(31,63,87,.08); padding-bottom: var(--safe-b); display: none; border-radius: 22px 22px 0 0; }
+.botnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--card); box-shadow: 0 -4px 20px color-mix(in srgb, var(--pri-dd) 8%, transparent); padding-bottom: var(--safe-b); display: none; border-radius: 22px 22px 0 0; }
 .botnav-in { display: grid; grid-template-columns: repeat(5, 1fr); height: var(--nav-h); padding: 0 6px; }
 .botnav button { border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--faint); font-size: 11px; position: relative; }
 .botnav .ic { width: 52px; height: 30px; border-radius: 15px; display: grid; place-items: center; transition: background .15s; }
 .botnav svg { width: 22px; height: 22px; }
-.botnav button[aria-current="page"] { color: var(--blue-d); font-weight: 700; }
-.botnav button[aria-current="page"] .ic { background: var(--blue-100); }
+.botnav button[aria-current="page"] { color: var(--pri-d); font-weight: 700; }
+.botnav button[aria-current="page"] .ic { background: var(--pri-100); }
 .botnav .badge { position: absolute; top: 6px; left: calc(50% + 10px); }
 
 /* ---- パネル (スマホ = 下から / PC = 右から) ---- */
-.scrim { position: fixed; inset: 0; background: rgba(16, 34, 48, .4); z-index: 50; opacity: 0; pointer-events: none; transition: opacity .2s; }
+.scrim { position: fixed; inset: 0; background: color-mix(in srgb, var(--pri-dd) 40%, transparent); z-index: 50; opacity: 0; pointer-events: none; transition: opacity .2s; }
 .scrim.on { opacity: 1; pointer-events: auto; }
-.sheet { position: fixed; z-index: 51; background: #fff; display: flex; flex-direction: column; top: 0; right: 0; bottom: 0; width: min(440px, 100%); transform: translateX(100%); transition: transform .26s cubic-bezier(.2,.8,.2,1); box-shadow: -8px 0 32px rgba(16,34,48,.16); }
-.sheet.on { transform: none; }
+.sheet { position: fixed; z-index: 51; background: var(--card); display: flex; flex-direction: column; top: 0; right: 0; bottom: 0; width: min(440px, 100%); transform: translateX(100%); visibility: hidden; transition: transform .26s cubic-bezier(.2,.8,.2,1), visibility 0s .26s; box-shadow: -8px 0 32px color-mix(in srgb, var(--pri-dd) 16%, transparent); }
+.sheet.on { transform: none; visibility: visible; transition: transform .26s cubic-bezier(.2,.8,.2,1); }
 .sheet-grab { display: none; }
 .sheet-h { display: flex; align-items: center; gap: 10px; padding: 16px 16px 12px 22px; border-bottom: 1px solid var(--line); }
 .sheet-h h2 { margin: 0; font-size: 18px; flex: 1; }
-.sheet-x { width: 40px; height: 40px; border-radius: 14px; border: 0; background: var(--blue-50); color: var(--blue-d); display: grid; place-items: center; }
+.sheet-x { width: 40px; height: 40px; border-radius: 14px; border: 0; background: var(--pri-50); color: var(--pri-d); display: grid; place-items: center; }
 .sheet-x svg { width: 20px; height: 20px; }
 .sheet-b { overflow: auto; flex: 1; -webkit-overflow-scrolling: touch; padding-bottom: calc(16px + var(--safe-b)); }
 .sheet-f { padding: 12px 16px calc(12px + var(--safe-b)); border-top: 1px solid var(--line); display: flex; gap: 8px; }
@@ -305,26 +264,26 @@ details.cond:not([open]) > summary .chg .c { display: none; }
 .lg-row .tag { min-width: 128px; justify-content: center; }
 .lg-row small { display: block; color: var(--faint); font-size: 12px; }
 .lg-note { padding: 12px 22px; border-top: 1px solid var(--line); font-size: 14px; }
-.lg-note b { display: block; font-size: 12px; color: var(--blue-d); margin-bottom: 2px; }
+.lg-note b { display: block; font-size: 12px; color: var(--pri-d); margin-bottom: 2px; }
 .sheet-sec { padding: 16px 22px 8px; font-size: 13px; font-weight: 700; color: var(--sub); }
 
-.toast { position: fixed; left: 50%; bottom: calc(24px + var(--safe-b)); transform: translate(-50%, 20px); background: var(--blue-dd); color: #fff; padding: 12px 20px; border-radius: 16px; font-size: 14px; opacity: 0; transition: .2s; z-index: 60; pointer-events: none; white-space: nowrap; box-shadow: 0 6px 20px rgba(16,34,48,.25); }
+.toast { position: fixed; left: 50%; bottom: calc(24px + var(--safe-b)); transform: translate(-50%, 20px); background: var(--pri-dd); color: #fff; padding: 12px 20px; border-radius: 16px; font-size: 14px; opacity: 0; transition: .2s; z-index: 60; pointer-events: none; white-space: nowrap; box-shadow: 0 6px 20px color-mix(in srgb, var(--pri-dd) 25%, transparent); }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 /* ---- ログイン ---- */
-.login { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; background: radial-gradient(120% 80% at 50% 0%, #4F84A8 0%, var(--blue) 45%, var(--blue-dd) 100%); }
-.login-card { width: min(400px, 100%); background: #fff; border-radius: 24px; padding: 28px 24px 24px; box-shadow: 0 20px 50px rgba(10, 30, 45, .3); }
-.login-card .logo-mk { background: var(--blue); color: #fff; width: 48px; height: 48px; border-radius: 15px; margin-bottom: 14px; }
+.login { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; background: radial-gradient(120% 80% at 50% 0%, var(--pri-l) 0%, var(--pri) 45%, var(--pri-dd) 100%); }
+.login-card { width: min(400px, 100%); background: var(--card); border-radius: 24px; padding: 28px 24px 24px; box-shadow: 0 20px 50px color-mix(in srgb, var(--pri-dd) 30%, transparent); }
+.login-card .logo-mk { background: var(--pri); color: #fff; width: 48px; height: 48px; border-radius: 15px; margin-bottom: 14px; }
 .login-card .logo-mk svg { width: 26px; height: 26px; }
 .login-card h1 { margin: 0; font-size: 22px; }
 .login-card p { margin: 6px 0 4px; color: var(--sub); font-size: 13px; }
 .login-card .btn { width: 100%; height: 50px; border-radius: 16px; margin-top: 20px; font-size: 15px; }
 .login-err { margin-top: 12px; background: var(--ng); color: var(--ngInk); border-radius: 12px; padding: 10px 12px; font-size: 13px; }
 .loading { min-height: 60vh; display: grid; place-items: center; color: var(--faint); }
-.loading i { width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--blue-100); border-top-color: var(--blue); animation: spin .8s linear infinite; display: block; margin: 0 auto 10px; }
+.loading i { width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--pri-100); border-top-color: var(--pri); animation: spin .8s linear infinite; display: block; margin: 0 auto 10px; }
 /* ---- 予定を追加 ---- */
-.hbtn.add { background: #fff; color: var(--blue-d); font-weight: 700; }
-.hbtn.add:hover { background: var(--blue-50); }
-.fab { position: fixed; right: 16px; bottom: calc(var(--nav-h) + var(--safe-b) + 16px); z-index: 41; height: 54px; padding: 0 20px 0 16px; border-radius: 27px; border: 0; background: var(--accent); color: #fff; font-weight: 700; font-size: 15px; display: none; align-items: center; gap: 6px; box-shadow: 0 8px 20px rgba(242,124,62,.4); }
+.hbtn.add { background: var(--card); color: var(--pri-d); font-weight: 700; }
+.hbtn.add:hover { background: var(--pri-50); }
+.fab { position: fixed; right: 16px; bottom: calc(var(--nav-h) + var(--safe-b) + 16px); z-index: 41; height: 54px; padding: 0 20px 0 16px; border-radius: 27px; border: 0; background: var(--accent-d); color: #fff; font-weight: 700; font-size: 15px; display: none; align-items: center; gap: 6px; box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-d) 35%, transparent); }
 .fab svg { width: 22px; height: 22px; }
 .goe { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-top: 1px solid var(--line); font-size: 13px; }
 .goe .pm small { white-space: normal; }
@@ -333,18 +292,187 @@ details.cond:not([open]) > summary .chg .c { display: none; }
 .btn.danger.really { background: var(--ngInk); color: #fff; border-color: var(--ngInk); }
 .err { max-width: 640px; margin: 40px auto; padding: 20px; background: var(--ng); color: var(--ngInk); border-radius: var(--r); }
 
+/* ---- 今日: 青い面に「その日の人数」を大きく、白い面に「いない人」と「部署ごと」 ---- */
+.vh-today { padding-top: 10px; }
+.td-top { display: grid; gap: 18px; }
+.td-date { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.td-lb { font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 10px; background: rgba(255,255,255,.18); }
+.td-big { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
+.td-big b { font-size: 52px; line-height: 1; letter-spacing: -.02em; }
+.td-big span { font-size: 15px; color: rgba(255,255,255,.92); }
+.td-meter { height: 8px; border-radius: 4px; background: var(--accent); margin-top: 14px; overflow: hidden; max-width: 460px; }
+.td-meter i { display: block; height: 100%; background: var(--card); }
+.td-keys { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.92); }
+.td-keys i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 6px; }
+.td-keys i.o { background: var(--accent); } .td-keys i.p { background: rgba(255,255,255,.55); }
+.td-keys > span b { font-size: 15px; color: #fff; }
+.td-pend { border: 0; height: 32px; padding: 0 8px 0 12px; border-radius: 16px; background: var(--card); color: var(--accent-d); font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+.td-pend b { font-size: 14px; }
+.td-pend span { font-size: 18px; line-height: 1; }
+.td-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; background: rgba(0,0,0,.12); border-radius: 22px; padding: 6px; }
+.wk { border: 0; background: none; color: #fff; border-radius: 16px; padding: 8px 0 7px; display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 76px; transition: background .15s; }
+.wk:hover { background: rgba(255,255,255,.1); }
+.wk .w { font-size: 12px; color: rgba(255,255,255,.88); }
+.wk .d { font-size: 20px; font-weight: 700; line-height: 1.2; }
+.wk .c { font-size: 12px; font-weight: 700; color: var(--accent-lt); }
+.wk.past { opacity: .6; }
+.wk.today .w { color: #fff; font-weight: 700; }
+.wk[aria-pressed="true"] { background: var(--card); color: var(--pri-d); opacity: 1; box-shadow: 0 6px 16px color-mix(in srgb, var(--pri-dd) 22%, transparent); }
+.wk[aria-pressed="true"] .w { color: var(--sub); }
+.wk[aria-pressed="true"] .c { color: var(--accent-d); }
+.td-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px; align-items: start; }
+.td-lh { display: flex; align-items: baseline; gap: 10px; padding: 18px 18px 12px; }
+.td-lh h2 { margin: 0; font-size: 17px; }
+.td-lh .td-n { margin-left: auto; color: var(--sub); font-size: 13px; }
+.td-lh.plain { padding: 4px 4px 12px; }
+.td-gl { display: flex; align-items: center; gap: 8px; padding: 8px 18px; font-size: 12px; font-weight: 700; color: var(--sub); background: var(--n-50); border-top: 1px solid var(--line); }
+.td-gl span { color: var(--faint); font-weight: 400; }
+.td-gl + .prow { border-top: 1px solid var(--line); }
+.td-list .empty { padding-bottom: 36px; }
+.td-dgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.dt { border: 0; text-align: left; padding: 14px 14px 13px; display: grid; gap: 4px; transition: box-shadow .15s; }
+.dt:hover { box-shadow: 0 4px 12px color-mix(in srgb, var(--pri-dd) 10%, transparent), 0 14px 28px color-mix(in srgb, var(--pri-dd) 8%, transparent); }
+.dt .dn { font-size: 13px; color: var(--sub); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dt .dv { font-size: 13px; color: var(--sub); }
+.dt .dv b { font-size: 24px; color: var(--ink); margin-right: 2px; }
+.dt .db { height: 6px; border-radius: 3px; background: var(--pri-50); overflow: hidden; margin-top: 2px; }
+.dt .db i { display: block; height: 100%; background: var(--pri); border-radius: 3px; }
+.dt.low { background: var(--accent-50); box-shadow: inset 0 0 0 1px var(--accent-200); }
+.dt.low .dv b { color: var(--accent-d); }
+.dt.low .db { background: var(--accent-100); } .dt.low .db i { background: var(--accent-d); }
+@media (min-width: 761px) {
+  .td-top { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); align-items: end; gap: 32px; }
+  .vh-today { padding-bottom: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important; }
+}
+
+/* ---- 仕上げ: 見出しは明朝、数字はセリフ、角は控えめ、影より細い線 ---- */
+body { letter-spacing: .02em; }
+h1, h2, .vh-title, .sheet-h h2, .logo-tx b { font-family: var(--f-head); font-weight: 600; letter-spacing: .08em; }
+.td-big b, .wk .d, .mc .n, .dt .dv b, .vh-title, .rank, .stat .v, .rc .dt, .av { font-family: var(--f-disp); font-variant-numeric: lining-nums tabular-nums; }
+.td-big b { font-size: 68px; font-weight: 500; letter-spacing: 0; }
+.td-big span { font-family: var(--f-head); letter-spacing: .08em; }
+.td-date { font-family: var(--f-head); font-weight: 600; letter-spacing: .08em; font-size: 16px; }
+.td-lb { font-family: 'Zen Kaku Gothic New', sans-serif; letter-spacing: .1em; border-radius: 4px; padding: 2px 8px; }
+.wk .d { font-size: 24px; font-weight: 600; }
+.mc .n { font-size: 19px; font-weight: 600; border-radius: 50%; }
+.dt .dv b { font-size: 30px; font-weight: 600; }
+.av { font-family: var(--f-head); font-size: 15px; border-radius: 50%; }
+.appbar { box-shadow: inset 0 -1px 0 rgba(255,255,255,.08); }
+body .vhead { border-radius: 0; }
+.td-lh h2, .sec-h h2 { font-family: var(--f-head); font-weight: 600; letter-spacing: .1em; font-size: 16px; }
+.td-lh { border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.td-gl { background: var(--n-50); letter-spacing: .12em; font-size: 11px; }
+.td-meter { height: 3px; border-radius: 0; }
+.td-week { border-radius: 10px; background: rgba(0,0,0,.14); }
+.wk { border-radius: 8px; }
+.dchip { border-radius: 4px; height: 34px; letter-spacing: .06em; border-color: rgba(255,255,255,.3); }
+.td-pend { border-radius: 4px; }
+.dt { border-radius: 10px; }
+.dt .dn { letter-spacing: .1em; font-size: 12px; }
+.dt .db { height: 3px; border-radius: 0; } .dt .db i { border-radius: 0; }
+.dt.low { box-shadow: inset 0 0 0 1px var(--accent-200); }
+.card { border-radius: var(--r); }
+.tag, .pill { border-radius: 4px; letter-spacing: .06em; }
+.btn { border-radius: 6px; letter-spacing: .08em; }
+.sheet-f .btn, .login-card .btn { border-radius: 8px; }
+.inp, .sel { border-radius: 8px; }
+.opts button { border-radius: 8px; }
+.hbtn { border-radius: 6px; }
+.rbtn { border-radius: 8px; }
+.fab { border-radius: 8px; letter-spacing: .08em; }
+.sheet-x { border-radius: 8px; }
+.grp { letter-spacing: .1em; }
+.login-card { border-radius: 16px; }
+.login-card h1 { letter-spacing: .14em; }
+/* テーマの選択 */
+.th-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 14px 22px 4px; }
+.th { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 12px; text-align: left; display: grid; gap: 8px; }
+.th:hover { border-color: var(--line2); }
+.th[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.th .sw { display: flex; }
+.th .sw i { width: 22px; height: 22px; border-radius: 50%; margin-right: -5px; box-shadow: 0 0 0 2px var(--card); }
+.th b { font-family: var(--f-disp); font-size: 17px; font-weight: 600; letter-spacing: .04em; line-height: 1.1; }
+.th small { color: var(--sub); font-size: 11px; line-height: 1.4; }
+.th-own { padding: 6px 22px 18px; }
+.th-own .row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.th-own label { display: grid; gap: 6px; font-size: 12px; font-weight: 700; color: var(--sub); }
+.th-own input[type="color"] { width: 100%; height: 44px; border: 1px solid var(--line2); border-radius: 8px; background: var(--card); padding: 3px; cursor: pointer; }
+
+/* ---- 今日から先の日付の帯 (横にスワイプ) ---- */
+.td-week { display: block; padding: 6px; overflow: hidden; }
+.td-days { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 24px) / 7); gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+.td-days::-webkit-scrollbar { display: none; }
+.td-days .wk { scroll-snap-align: start; position: relative; }
+.wk.m1 { box-shadow: inset 1px 0 0 rgba(255,255,255,.35); border-radius: 0 8px 8px 0; }
+.wk .mo { position: absolute; top: -1px; left: 6px; font-size: 10px; font-weight: 700; color: var(--accent-lt); letter-spacing: .04em; }
+.wk.we .w { color: var(--accent-lt); }
+.wk[aria-pressed="true"].we .w { color: var(--accent-d); }
+/* スワイプの動き */
+[data-swipe] { touch-action: pan-y; will-change: transform; }
+[data-swipe].slide { transition: transform .32s cubic-bezier(.2,.8,.2,1), opacity .24s ease-out; }
+.mc.gone { pointer-events: none; }
+.mc.gone .n { color: rgba(255,255,255,.28); font-weight: 500; }
+.daynav button:disabled { opacity: .35; cursor: default; }
+
+/* ---- メニューはアイコンだけ ---- */
+.topnav { gap: 6px; }
+.topnav button { width: 44px; height: 44px; padding: 0; border-radius: 10px; justify-content: center; position: relative; }
+.topnav button svg { width: 21px; height: 21px; }
+.topnav button .badge { position: absolute; top: 3px; right: 2px; }
+.hbtn { width: 40px; height: 40px; padding: 0; justify-content: center; border-radius: 10px; }
+.hbtn.add { width: 40px; }
+.botnav-in { height: 60px; }
+.botnav button { gap: 0; }
+.botnav .ic { width: 56px; height: 36px; border-radius: 12px; }
+.botnav svg { width: 24px; height: 24px; }
+.botnav .badge { top: 8px; left: calc(50% + 12px); }
+
+.hbtn[aria-current] { background: var(--card); color: var(--pri-d); }
+.hbtn { position: relative; }
+.hbtn .badge { position: absolute; top: -4px; right: -4px; }
+/* なぞっている間の行き先 */
+.peek { position: fixed; left: 50%; top: calc(var(--bar-h) + 14px); transform: translate(-50%, -6px); z-index: 45; background: var(--pri-dd); color: #fff; padding: 9px 18px; border-radius: 999px; font-family: var(--f-head); font-weight: 600; font-size: 15px; letter-spacing: .08em; white-space: nowrap; opacity: 0; pointer-events: none; transition: transform .15s; box-shadow: 0 8px 24px color-mix(in srgb, var(--pri-dd) 35%, transparent); }
+.peek.on { transform: translate(-50%, 0); }
+.peek.no { background: var(--sub); }
+
+/* ---- 右下の「＋」: 押すと上に項目が開く ---- */
+.dial { position: fixed; right: 18px; bottom: calc(var(--nav-h) + var(--safe-b) + 18px); z-index: 46; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+.dial-btn { width: 60px; height: 60px; border-radius: 50%; border: 0; background: var(--accent-d); color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px color-mix(in srgb, var(--accent-d) 45%, transparent), 0 2px 6px color-mix(in srgb, var(--pri-dd) 20%, transparent); transition: transform .28s cubic-bezier(.3,1.5,.5,1), background .2s; animation: dialPop .5s cubic-bezier(.3,1.6,.5,1) both; }
+.dial-btn svg { width: 28px; height: 28px; transition: transform .28s cubic-bezier(.3,1.5,.5,1); }
+.dial-btn:active { transform: scale(.92); }
+.dial.open .dial-btn { background: var(--pri-dd); }
+.dial.open .dial-btn svg { transform: rotate(135deg); }
+@keyframes dialPop { from { transform: scale(0) translateY(30px); } to { transform: none; } }
+.dial-items { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; margin-right: 6px; pointer-events: none; }
+.dial.open .dial-items { pointer-events: auto; }
+.dial-items button { border: 0; background: none; padding: 0; display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(18px) scale(.85); transform-origin: right center; transition: opacity .18s, transform .26s cubic-bezier(.3,1.4,.5,1); }
+.dial.open .dial-items button { opacity: 1; transform: none; }
+.dial.open .dial-items button:nth-last-child(1) { transition-delay: 0s; }
+.dial.open .dial-items button:nth-last-child(2) { transition-delay: .05s; }
+.dial.open .dial-items button:nth-last-child(3) { transition-delay: .1s; }
+.dial-items .lb { background: var(--card); color: var(--ink); font-size: 14px; font-weight: 700; letter-spacing: .06em; padding: 9px 14px; border-radius: 8px; box-shadow: 0 6px 18px color-mix(in srgb, var(--pri-dd) 18%, transparent); white-space: nowrap; }
+.dial-items .ic { width: 48px; height: 48px; border-radius: 50%; background: var(--card); color: var(--pri); display: grid; place-items: center; box-shadow: 0 6px 18px color-mix(in srgb, var(--pri-dd) 22%, transparent); }
+.dial-items .ic svg { width: 22px; height: 22px; }
+.dial-items button:hover .ic { background: var(--pri-50); }
+.dial-scrim { position: fixed; inset: 0; z-index: 44; background: color-mix(in srgb, var(--pri-dd) 38%, transparent); backdrop-filter: blur(2px); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.dial-scrim.on { opacity: 1; pointer-events: auto; }
+@media (min-width: 761px) { .dial { right: 32px; bottom: 32px; } }
+
 /* PC: カレンダーは左に月・右にその日 */
 @media (min-width: 961px) {
   .mcal { grid-template-columns: 440px minmax(0, 1fr); gap: 24px; align-items: start; }
   .mcal .mside { position: sticky; top: calc(var(--bar-h) + 16px); }
-  .mpanel { background: var(--blue); color: #fff; border-radius: var(--r); padding: 18px 18px 16px; box-shadow: var(--shadow); }
+  .mpanel { background: var(--pri); color: #fff; border-radius: var(--r); padding: 18px 18px 16px; box-shadow: var(--shadow); }
   .vhead.vh-month { padding-bottom: 10px; border-radius: 0; }
   .vhead.vh-month + .vbody { padding-top: 0; }
   .vhead.vh-month + .vbody .mpanel { margin-top: 0; }
 }
 /* ---- タブレット以下 ---- */
 @media (max-width: 960px) {
-  .two, .tool { grid-template-columns: minmax(0, 1fr); }
+  .tool, .td-grid { grid-template-columns: minmax(0, 1fr); }
   details.cond { position: static; }
   .reqs { grid-template-columns: minmax(0, 1fr); }
   .mpanel { background: none; padding: 0; }
@@ -360,16 +488,9 @@ details.cond:not([open]) > summary .chg .c { display: none; }
   main { padding-bottom: calc(var(--nav-h) + var(--safe-b) + 28px); }
   .vhead { border-radius: 0 0 28px 28px; padding-bottom: 18px; }
   .vh-title { font-size: 20px; }
-  .wstrip { gap: 5px; }
-  .wc { border-radius: 15px; padding: 8px 0 7px; }
-  .wc .d { font-size: 17px; }
-  .wc .c { font-size: 10px; padding: 0 5px; }
-  .stat { padding: 12px; }
-  .stat .v { font-size: 22px; }
-  .bc .track { height: 96px; }
-  .mc { height: 52px; }
+  .mc { height: 54px; }
   .mc .n { width: 34px; height: 34px; }
-  .sheet { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 88vh; border-radius: 26px 26px 0 0; transform: translateY(100%); box-shadow: 0 -8px 32px rgba(16,34,48,.18); }
+  .sheet { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 88vh; border-radius: 26px 26px 0 0; transform: translateY(100%); box-shadow: 0 -8px 32px color-mix(in srgb, var(--pri-dd) 18%, transparent); }
   .sheet-grab { display: block; width: 44px; height: 5px; border-radius: 3px; background: var(--line2); margin: 10px auto 0; }
   .sheet-h { padding: 8px 14px 10px 22px; }
   .mx-wrap { max-height: calc(100vh - var(--bar-h) - var(--nav-h) - 190px); }
@@ -384,6 +505,62 @@ details.cond:not([open]) > summary .chg .c { display: none; }
   .hbtn.add { display: none; }
 }
 </style>
+<script>
+// ============================================================================
+// テーマ色 (見ている人ごと。localStorage)。5色のパレットから画面の色を全部作る。
+// 文字が読めるように、メイン色・アクセント色は白い文字との差 (コントラスト) が足りるまで自動で濃くする。
+// ============================================================================
+var THEMES = [
+  { id: 'mineral', name: 'Mineral Mix', kw: '知性・品格・モダン', sw: ['#F5F1EC', '#7B8C8A', '#3A4745', '#B3A393', '#DAD0C7'], pri: '#3A4745', acc: '#B3A393', bg: '#F5F1EC' },
+  { id: 'chic', name: 'Chic Elegance', kw: '信頼感・洗練・都会的', sw: ['#2B4C5C', '#D8C3A5', '#EAE7DC', '#8E8D8A', '#E98074'], pri: '#2B4C5C', acc: '#E98074', bg: '#F1EFE8' },
+  { id: 'classic', name: 'Classic', kw: '伝統・格式・モダンエレガンス', sw: ['#2E3B40', '#E4DECA', '#CCC0AA', '#9C8D71', '#63524D'], pri: '#2E3B40', acc: '#9C8D71', bg: '#F0ECE1' },
+  { id: 'nostalgic', name: 'Nostalgic Rose', kw: '優雅・大人の上品さ・レトロモダン', sw: ['#D9B4BB', '#A6808E', '#F2EDE4', '#D9D1C7', '#8C7B77'], pri: '#8C7B77', acc: '#D9B4BB', bg: '#F2EDE4' },
+  { id: 'terracotta', name: 'Terracotta', kw: '温かみ・自然素材・職人技', sw: ['#F2E8DF', '#D9A689', '#BF8069', '#BF665E', '#593E3C'], pri: '#593E3C', acc: '#BF665E', bg: '#F2E8DF' },
+  { id: 'feminine', name: 'Modern Feminine', kw: '知的・エレガント・上品', sw: ['#A67B7E', '#9295A6', '#AEB1BF', '#F2E4DC', '#D9B7B0'], pri: '#A67B7E', acc: '#9295A6', bg: '#F5ECE6' },
+  { id: 'cool', name: 'Cool Minimal', kw: 'クール・ミニマル・知的', sw: ['#CCD0D9', '#9BABBF', '#E4EAF2', '#556773', '#2E3B40'], pri: '#556773', acc: '#9BABBF', bg: '#EDF1F6' },
+  { id: 'romantic', name: 'Romantic', kw: 'ロマンティック・優しい気品', sw: ['#F2C9D4', '#D9BAD1', '#F2EBF0', '#DCE0F2', '#BAC2D9'], pri: '#BAC2D9', acc: '#F2C9D4', bg: '#F5F0F3' },
+  { id: 'fresh', name: 'Fresh', kw: '爽快感・クリーン・未来志向', sw: ['#D1E3E6', '#B4D9D5', '#68A69B', '#F2E6A7', '#F2CD5C'], pri: '#68A69B', acc: '#F2CD5C', bg: '#EEF5F5' },
+  { id: 'botanical', name: 'Botanical', kw: '癒し・ナチュラル・温もり', sw: ['#5DA684', '#97A69C', '#7D7672', '#F2EFEB', '#F2B6B6'], pri: '#5DA684', acc: '#F2B6B6', bg: '#F2EFEB' },
+];
+var Theme = (function () {
+  function rgb(h) { h = String(h).replace('#', ''); if (h.length === 3) h = h.replace(/./g, '$&$&'); return [0, 2, 4].map(function (i) { return parseInt(h.substr(i, 2), 16) || 0; }); }
+  function hex(c) { return '#' + c.map(function (v) { v = Math.max(0, Math.min(255, Math.round(v))); return (v < 16 ? '0' : '') + v.toString(16); }).join('').toUpperCase(); }
+  function mix(a, b, t) { var x = rgb(a), y = rgb(b); return hex(x.map(function (v, i) { return v * t + y[i] * (1 - t); })); }   // t = a の割合
+  function lum(h) { return rgb(h).map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }).reduce(function (s, v, i) { return s + v * [0.2126, 0.7152, 0.0722][i]; }, 0); }
+  function ratio(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function toward(c, end, against, need) { for (var i = 0; i < 40 && ratio(c, against) < need; i++) c = mix(c, end, 0.94); return c; }
+  function derive(t) {
+    var bg = lum(t.bg) < 0.62 ? mix(t.bg, '#FFFFFF', 0.25) : t.bg;
+    var card = mix('#FFFFFF', bg, 0.65);
+    var pri = toward(t.pri, '#000000', '#FFFFFF', 5.2);
+    var acc = t.acc;
+    var accD = toward(acc, '#000000', '#FFFFFF', 4.6);
+    var acc100 = mix(acc, card, 0.24);
+    var ink = toward(mix(pri, '#000000', 0.55), '#000000', card, 12);
+    return {
+      '--pri': pri, '--pri-d': mix(pri, '#000000', 0.84), '--pri-dd': mix(pri, '#000000', 0.66), '--pri-l': mix(pri, '#FFFFFF', 0.78),
+      '--pri-50': mix(pri, card, 0.07), '--pri-100': mix(pri, card, 0.15), '--pri-200': mix(pri, card, 0.32),
+      '--accent': acc, '--accent-d': accD, '--accent-50': mix(acc, card, 0.12), '--accent-100': acc100, '--accent-200': mix(acc, card, 0.42),
+      '--accent-ink': toward(accD, '#000000', mix(acc, card, 0.42), 5), '--accent-lt': toward(mix(acc, '#FFFFFF', 0.55), '#FFFFFF', pri, 4.6),
+      '--ink': ink, '--sub': toward(mix(ink, card, 0.66), '#000000', card, 5.2), '--faint': toward(mix(ink, card, 0.5), '#000000', card, 4.6),
+      '--past-ink': mix(ink, card, 0.36), '--n-50': mix(ink, card, 0.03), '--n-100': mix(ink, card, 0.075),
+      '--line': mix(ink, card, 0.1), '--line2': mix(ink, card, 0.2), '--bg': bg, '--card': card,
+    };
+  }
+  function find(id) { for (var i = 0; i < THEMES.length; i++) if (THEMES[i].id === id) return THEMES[i]; return null; }
+  function saved() { try { return JSON.parse(localStorage.getItem('calweb.theme') || 'null'); } catch (e) { return null; } }
+  function apply(sel) {
+    var t = sel && sel.id === 'custom' ? sel : find(sel && sel.id) || THEMES[0];
+    var v = derive(t), st = document.documentElement.style;
+    Object.keys(v).forEach(function (k) { st.setProperty(k, v[k]); });
+    var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', v['--pri']);
+    return t;
+  }
+  function set(sel) { try { localStorage.setItem('calweb.theme', JSON.stringify(sel)); } catch (e) {} return apply(sel); }
+  return { apply: apply, set: set, saved: saved, current: function () { return saved() || { id: THEMES[0].id }; } };
+})();
+Theme.apply(Theme.saved());
+</script>
 </head>
 <body>
 <header class="appbar">
@@ -394,9 +571,9 @@ details.cond:not([open]) > summary .chg .c { display: none; }
     </div>
     <nav class="topnav" id="topnav" aria-label="画面"></nav>
     <div class="acts">
-      <button class="hbtn add" id="btnAdd" title="予定を追加"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="tx">予定を追加</span></button>
-      <button class="hbtn" id="btnReload" title="最新にする"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg><span class="tx">更新</span></button>
-      <button class="hbtn" id="btnLegend" title="記号と数え方"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.5"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg><span class="tx">見方</span></button>
+      <button class="hbtn" id="btnReload" title="最新にする" aria-label="最新にする"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg></button>
+      <button class="hbtn" id="btnTheme" title="画面の色" aria-label="画面の色"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.8 2-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1" fill="currentColor"/><circle cx="10.5" cy="7" r="1" fill="currentColor"/><circle cx="15" cy="7.5" r="1" fill="currentColor"/></svg></button>
+      <button class="hbtn" id="btnLegend" title="記号と数え方" aria-label="記号と数え方"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.5"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg></button>
     </div>
   </div>
 </header>
@@ -407,7 +584,7 @@ details.cond:not([open]) > summary .chg .c { display: none; }
   <section class="view" id="v-find" hidden></section>
   <section class="view" id="v-requests" hidden></section>
 </main>
-<nav class="botnav" aria-label="画面" hidden><div class="botnav-in" id="botnav"></div></nav>
+<nav class="botnav" aria-label="画面" data-swipe="tab" hidden><div class="botnav-in" id="botnav"></div></nav>
 <div class="scrim" id="scrim"></div>
 <aside class="sheet" id="sheet" aria-hidden="true" role="dialog">
   <div class="sheet-grab"></div>
@@ -415,8 +592,17 @@ details.cond:not([open]) > summary .chg .c { display: none; }
   <div class="sheet-b" id="sheetBody"></div>
   <div class="sheet-f" id="sheetFoot" hidden></div>
 </aside>
-<button class="fab" id="fabAdd" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>予定を追加</button>
 <div class="toast" id="toast" role="status"></div>
+<div class="peek" id="peek" aria-hidden="true"></div>
+<div class="dial-scrim" id="dialScrim"></div>
+<div class="dial" id="dial" hidden>
+  <div class="dial-items" id="dialItems" role="menu" aria-label="追加する">
+    <button role="menuitem" data-dial="school" tabindex="-1"><span class="lb">学校・テストを追加</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l9-4.5 9 4.5-9 4.5z"/><path d="M7 10.5v4.5c1.5 1.5 3 2 5 2s3.5-.5 5-2v-4.5"/><path d="M21 8.5v5"/></svg></span></button>
+    <button role="menuitem" data-dial="private" tabindex="-1"><span class="lb">私用を追加</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg></span></button>
+    <button role="menuitem" data-dial="find" tabindex="-1"><span class="lb">空き日をさがす</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></span></button>
+  </div>
+  <button class="dial-btn" id="dialBtn" aria-expanded="false" aria-controls="dialItems" aria-label="予定を追加" title="予定を追加"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+</div>
 <script src="config.js"></script>
 
 <script>
@@ -428,21 +614,19 @@ var D = null;
 // 定数 (記号と数え方は CalendarView.js と同じ)
 // ============================================================================
 var TAG = {
-  '休':   { bg: '#2F4A60', fg: '#FFFFFF', full: true, rank: 0, short: '休会', label: '休会（完全に休止）', grp: 'susp' },
-  '学':   { bg: '#DCE8F0', fg: '#2C5574', full: true, rank: 1, short: '学校・テスト', label: '学校・テスト（終日）', grp: 'school' },
-  '私':   { bg: '#FDE4D3', fg: '#A04A17', full: true, rank: 2, short: '私用', label: '私用（終日）', grp: 'private' },
-  '休M':  { bg: '#E3E9EE', fg: '#33495C', rank: 3, short: '休会 mtgは可', label: '休会（mtgのみ参加・タスクは休み）', grp: 'susp' },
-  '休T':  { bg: '#E3E9EE', fg: '#33495C', rank: 3, short: '休会 タスクは可', label: '休会（タスクのみ・mtgは休み）', grp: 'susp' },
-  '前学': { bg: '#EEF4F8', fg: '#3D6F91', rank: 4, short: '学校 午前', label: '学校・テスト（午前のみ）', grp: 'school' },
-  '後学': { bg: '#EEF4F8', fg: '#3D6F91', rank: 4, short: '学校 午後', label: '学校・テスト（午後のみ）', grp: 'school' },
-  '時学': { bg: '#EEF4F8', fg: '#3D6F91', rank: 4, short: '学校', label: '学校・テスト（時間指定）', grp: 'school' },
-  '前私': { bg: '#FEF1E7', fg: '#A04A17', rank: 5, short: '私用 午前', label: '私用（午前のみ）', grp: 'private' },
-  '後私': { bg: '#FEF1E7', fg: '#A04A17', rank: 5, short: '私用 午後', label: '私用（午後のみ）', grp: 'private' },
-  '時私': { bg: '#FEF1E7', fg: '#A04A17', rank: 5, short: '私用', label: '私用（時間指定）', grp: 'private' },
-  '休?':  { bg: '#F2F4F6', fg: '#5D6B78', rank: 6, short: '休会 申請中', label: '休会（承認待ち）', grp: 'pend' },
+  '休':   { bg: 'var(--pri-dd)', fg: '#FFFFFF', full: true, rank: 0, short: '休会', label: '休会（完全に休止）', grp: 'susp' },
+  '学':   { bg: 'var(--pri-100)', fg: 'var(--pri-d)', full: true, rank: 1, short: '学校・テスト', label: '学校・テスト（終日）', grp: 'school' },
+  '私':   { bg: 'var(--accent-200)', fg: 'var(--accent-ink)', full: true, rank: 2, short: '私用', label: '私用（終日）', grp: 'private' },
+  '休M':  { bg: 'var(--n-100)', fg: 'var(--ink)', rank: 3, short: '休会 mtgは可', label: '休会（mtgのみ参加・タスクは休み）', grp: 'susp' },
+  '休T':  { bg: 'var(--n-100)', fg: 'var(--ink)', rank: 3, short: '休会 タスクは可', label: '休会（タスクのみ・mtgは休み）', grp: 'susp' },
+  '前学': { bg: 'var(--pri-50)', fg: 'var(--pri)', rank: 4, short: '学校 午前', label: '学校・テスト（午前のみ）', grp: 'school' },
+  '後学': { bg: 'var(--pri-50)', fg: 'var(--pri)', rank: 4, short: '学校 午後', label: '学校・テスト（午後のみ）', grp: 'school' },
+  '時学': { bg: 'var(--pri-50)', fg: 'var(--pri)', rank: 4, short: '学校', label: '学校・テスト（時間指定）', grp: 'school' },
+  '前私': { bg: 'var(--accent-100)', fg: 'var(--accent-ink)', rank: 5, short: '私用 午前', label: '私用（午前のみ）', grp: 'private' },
+  '後私': { bg: 'var(--accent-100)', fg: 'var(--accent-ink)', rank: 5, short: '私用 午後', label: '私用（午後のみ）', grp: 'private' },
+  '時私': { bg: 'var(--accent-100)', fg: 'var(--accent-ink)', rank: 5, short: '私用', label: '私用（時間指定）', grp: 'private' },
+  '休?':  { bg: 'var(--n-50)', fg: 'var(--sub)', rank: 6, short: '休会 申請中', label: '休会（承認待ち）', grp: 'pend' },
 };
-var DOT = { school: '#9CC3E4', private: '#F6A77C', susp: '#FFFFFF', pend: 'rgba(255,255,255,.4)' };   // 青い面の上の点
-var DOT_LB = { school: '学校・テスト', private: '私用', susp: '休会', pend: '休会の申請中' };
 var MODE_TAG = { full: '休', mtg_only: '休M', task_only: '休T' };
 var SRC_LABEL = { school: '学校', private: '私用', meeting: '会議', event: '運営' };
 var DOW = ['日', '月', '火', '水', '木', '金', '土'];
@@ -459,12 +643,13 @@ var IC = {
   chevL: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   chevR: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
   chevD: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg>',
   bell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>',
   smile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4 4 0 0 0 7 0"/><circle cx="9" cy="10" r=".8" fill="currentColor"/><circle cx="15" cy="10" r=".8" fill="currentColor"/></svg>',
 };
 var TABS = [
-  { id: 'today', label: '今日', long: '今日・今週', filter: true },
+  { id: 'today', label: '今日', long: '今日から', filter: true },
   { id: 'month', label: 'カレンダー', long: 'カレンダー', filter: true },
   { id: 'matrix', label: '一覧', long: 'メンバー一覧', filter: true },
   { id: 'find', label: 'さがす', long: '空き検索・日程調整' },
@@ -489,22 +674,22 @@ function hmIn(min) { return pad2(Math.floor(min / 60)) + ':' + pad2(min % 60); }
 function readHm(s) { var m = /^(\d{1,2}):(\d{2})/.exec(String(s || '')); return m ? Math.min(1440, (+m[1]) * 60 + (+m[2])) : null; }
 function daysBetween(a, b) { return Math.round((parse(b) - parse(a)) / 864e5); }
 function heat(r) {   // 活動できる割合 → 背景 (少ないほど濃い)
-  if (r >= 0.9) return { bg: '#FFFFFF', fg: '#1D2B36' };
-  if (r >= 0.75) return { bg: '#EEF4F8', fg: '#1D2B36' };
-  if (r >= 0.5) return { bg: '#CFE0EC', fg: '#1F3F57' };
-  return { bg: '#9FC0D8', fg: '#14324A' };
+  if (r >= 0.9) return { bg: 'var(--card)', fg: 'var(--ink)' };
+  if (r >= 0.75) return { bg: 'var(--pri-50)', fg: 'var(--ink)' };
+  if (r >= 0.5) return { bg: 'var(--pri-100)', fg: 'var(--pri-dd)' };
+  return { bg: 'var(--pri-200)', fg: 'var(--pri-dd)' };
 }
 function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem('calweb.' + k) || 'null'); localStorage.setItem('calweb.' + k, JSON.stringify(v)); } catch (e) { return null; } }
 function toast(t) { var el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function () { el.classList.remove('on'); }, 2200); }
 function isNarrow() { return window.matchMedia('(max-width: 760px)').matches; }
 function tagHtml(tag, past, text) {
   var t = TAG[tag];
-  if (past) return '<span class="tag" style="background:#E9EDF1;color:#A7B0BA">' + esc(text || t.short) + '</span>';
-  return '<span class="tag' + (t.full ? ' b' : '') + '" style="background:' + t.bg + ';color:' + t.fg + (tag === '休?' ? ';box-shadow:inset 0 0 0 1px #CAD5DE' : '') + '">' + esc(text || t.short) + '</span>';
+  if (past) return '<span class="tag" style="background:var(--n-100);color:var(--past-ink)">' + esc(text || t.short) + '</span>';
+  return '<span class="tag' + (t.full ? ' b' : '') + '" style="background:' + t.bg + ';color:' + t.fg + (tag === '休?' ? ';box-shadow:inset 0 0 0 1px var(--line2)' : '') + '">' + esc(text || t.short) + '</span>';
 }
 function avHtml(name, tag, past) {   // 名前の頭文字
   var t = tag ? TAG[tag] : null;
-  var bg = past || !t ? '#EEF1F4' : t.bg, fg = past || !t ? '#9AA6B2' : t.fg;
+  var bg = past || !t ? 'var(--n-50)' : t.bg, fg = past || !t ? 'var(--faint)' : t.fg;
   return '<span class="av" style="background:' + bg + ';color:' + fg + '">' + esc(String(name || '').charAt(0)) + '</span>';
 }
 function personRow(r, m, past, sub) {
@@ -653,12 +838,9 @@ if (!TABS.some(function (t) { return t.id === cur; })) cur = 'today';
 var rendered = {};
 function drawTabs() {
   var pend = D.requests.filter(function (x) { return x.status === 'pending'; }).length;
-  $('topnav').innerHTML = TABS.map(function (t) {
-    return '<button data-tab="' + t.id + '"' + (t.id === cur ? ' aria-current="page"' : '') + '>' + IC[t.id] + '<span>' + t.long + '</span>' + (t.id === 'requests' && pend ? '<span class="badge">' + pend + '</span>' : '') + '</button>';
-  }).join('');
-  $('botnav').innerHTML = TABS.map(function (t) {
-    return '<button data-tab="' + t.id + '"' + (t.id === cur ? ' aria-current="page"' : '') + '><span class="ic">' + IC[t.id] + '</span><span>' + t.label + '</span>' + (t.id === 'requests' && pend ? '<span class="badge">' + pend + '</span>' : '') + '</button>';
-  }).join('');
+  var btn = function (t, ic) { return '<button data-tab="' + t.id + '"' + (t.id === cur ? ' aria-current="page"' : '') + ' aria-label="' + t.long + '" title="' + t.long + '">' + ic + (t.id === 'requests' && pend ? '<span class="badge">' + pend + '</span>' : '') + '</button>'; };
+  $('topnav').innerHTML = TABS.map(function (t) { return btn(t, IC[t.id]); }).join('');
+  $('botnav').innerHTML = TABS.map(function (t) { return btn(t, '<span class="ic">' + IC[t.id] + '</span>'); }).join('');
 }
 function show(id) {
   cur = id; store('tab', id);
@@ -680,7 +862,7 @@ function refreshViews() {
   renderView(cur);
   if (cur === 'matrix') scrollMatrixToToday();
 }
-function vhead(cls, inner) { return '<div class="vhead ' + (cls || '') + '"><div class="wrap">' + inner + '</div></div>'; }
+function vhead(cls, inner) { return '<div class="vhead ' + (cls || '') + '"' + (/swipe-top/.test(cls || '') ? ' data-swipe="week"' : '') + '><div class="wrap">' + inner + '</div></div>'; }
 
 // ============================================================================
 // 1. 今日 (週の日付を選ぶ → その日いない人)
@@ -697,42 +879,54 @@ function runText(mid, d, tag) {
   return a === b ? 'この日だけ' : md(a) + '〜' + md(b) + '（' + (daysBetween(a, b) + 1) + '日間）';
 }
 function renderToday() {
-  var t = D.today;
-  if (S.week.indexOf(daySel) < 0) daySel = t;
-  var d = daySel, past = d < t;
-  var head = '<div class="vh-row"><div class="vh-title"><small>' + (d === t ? '今日' : d < t ? '過ぎた日' : 'この日') + '</small>' + mdj(d) + '</div></div>'
-    + '<div class="wstrip" role="group" aria-label="今週の日付">' + S.week.map(function (x) {
-      var a = avail(V.rows, x), oc = a.n - a.ok;
-      return '<button class="wc' + (x === t ? ' today' : x < t ? ' past' : '') + '" data-wday="' + x + '" aria-pressed="' + (x === d) + '" aria-label="' + mdj(x) + ' いない人' + oc + '人">'
-        + '<span class="w">' + (x === t ? '今日' : DOW[dow(x)]) + '</span><span class="d num">' + (+x.slice(8, 10)) + '</span><span class="c num">' + (oc ? oc + '人' : '—') + '</span></button>';
-    }).join('') + '</div>' + deptChips();
-  // その日の人
+  var t = D.today, tmr = addDays(t, 1), ahead = S.days.filter(function (x) { return x >= t; });
+  if (ahead.indexOf(daySel) < 0) daySel = t;
+  var d = daySel, past = false;
   var list = [], seen = {};
   V.rows.forEach(function (r) { var m = mark(r.mid, d); if (!m || seen[r.mid]) return; seen[r.mid] = 1; list.push({ r: r, m: m }); });
   list.sort(function (a, b) { return TAG[a.m.tag].rank - TAG[b.m.tag].rank; });
-  var full = list.filter(function (x) { return TAG[x.m.tag].full; }).length;
-  var all = avail(V.rows, d);
+  var fullL = list.filter(function (x) { return TAG[x.m.tag].full; }), partL = list.filter(function (x) { return !TAG[x.m.tag].full; });
+  var all = avail(V.rows, d), out = all.n - all.ok;
   var pending = D.requests.filter(function (x) { return x.status === 'pending' && (!V.on || V.seen[x.mid]); }).length;
-  var h = '<div class="wrap vbody">';
-  if (pending) h += '<button class="notice" data-tab="requests">' + IC.bell + '<span>休会の承認待ちが <b>' + pending + '件</b> あります</span><span class="go">見る →</span></button><div style="height:16px"></div>';
-  h += '<div class="stats"><div class="card stat blue"><div class="k">活動できる</div><div class="v num">' + all.ok + '<small>/ ' + all.n + '人</small></div></div>'
-    + '<div class="card stat org"><div class="k">いない（終日）</div><div class="v num">' + full + '<small>人</small></div></div>'
-    + '<div class="card stat"><div class="k">一部いない</div><div class="v num">' + (list.length - full) + '<small>人</small></div></div></div>';
-  h += '<div class="two sec"><div><div class="sec-h"><h2>' + (d === t ? '今日' : md(d)) + ' 予定がある人</h2><span class="hint">' + list.length + '人</span></div><div class="card plist">';
-  if (!list.length) h += emptyHtml(d === t ? '今日は全員そろっています' : 'この日は全員そろっています');
-  else list.forEach(function (x) { h += personRow(x.r, x.m, past, x.r.dept + '・' + runText(x.r.mid, d, x.m.tag)); });
-  h += '</div></div><div>';
-  // 今週の棒グラフ
-  h += '<div class="sec-h"><h2>今週の活動できる人数</h2></div><div class="card"><div class="bars">' + S.week.map(function (x) {
-    var a = avail(V.rows, x), pct = a.n ? Math.round(a.ok / a.n * 100) : 0;
-    return '<button class="bc' + (x < t ? ' past' : '') + '" data-wday="' + x + '" aria-pressed="' + (x === d) + '"><span class="val num">' + a.ok + '</span><span class="track"><span class="fill" style="height:' + Math.max(4, pct) + '%"></span></span><span class="lb">' + (x === t ? '今日' : DOW[dow(x)]) + '<br>' + (+x.slice(8, 10)) + '</span></button>';
-  }).join('') + '</div></div>';
-  // 部署ごと (選んだ日)
-  h += '<div class="sec-h" style="margin-top:22px"><h2>部署ごと（' + md(d) + '）</h2><span class="sp"></span><span class="hint">押すと名前が出ます</span></div><div class="card hbars">' + V.groups.map(function (g) {
-    var a = avail(g.rows, d), pct = a.n ? Math.round(a.ok / a.n * 100) : 0;
-    return '<button class="hb" data-day="' + d + '"><span class="nm">' + esc(g.dept) + '</span><span class="t"><i class="' + (pct < 75 ? 'low' : '') + '" style="width:' + pct + '%"></i></span><span class="n num">' + a.ok + '/' + a.n + '</span></button>';
-  }).join('') + '</div></div></div></div>';
-  $('v-today').innerHTML = vhead('', head) + h;
+  var label = d === t ? '今日' : d === tmr ? '明日' : DOW[dow(d)] + '曜日';
+  // 青い面: その日の人数を大きく → 今日から先の日付 (横にスワイプ)
+  var head = '<div class="td-top"><div class="td-sum">'
+    + '<div class="td-date"><span class="td-lb">' + label + '</span>' + mdj(d) + '</div>'
+    + '<div class="td-big"><b class="num">' + all.ok + '</b><span>/ ' + all.n + '人が活動できる</span></div>'
+    + '<div class="td-meter" aria-hidden="true"><i style="width:' + (all.n ? all.ok / all.n * 100 : 0) + '%"></i></div>'
+    + '<div class="td-keys"><span><i class="o"></i>終日いない <b class="num">' + out + '</b>人</span><span><i class="p"></i>一部いない <b class="num">' + partL.length + '</b>人</span>'
+    + (pending ? '<button class="td-pend" data-tab="requests">休会の承認待ち <b class="num">' + pending + '</b>件<span aria-hidden="true">›</span></button>' : '') + '</div></div>'
+    + '<div class="td-week"><div class="td-days" id="tdDays" role="group" aria-label="日付（横にスワイプで先の日へ）">' + ahead.map(function (x) {
+      var a = avail(V.rows, x), oc = a.n - a.ok, w = dow(x), m1 = x.slice(8) === '01' && x !== t;
+      return '<button class="wk' + (x === t ? ' today' : '') + (w === 0 || w === 6 ? ' we' : '') + (m1 ? ' m1' : '') + '" data-wday="' + x + '" aria-pressed="' + (x === d) + '" aria-label="' + mdj(x) + ' 終日いない人' + oc + '人">'
+        + (m1 ? '<span class="mo num">' + (+x.slice(5, 7)) + '月</span>' : '')
+        + '<span class="w">' + (x === t ? '今日' : x === tmr ? '明日' : DOW[w]) + '</span><span class="d num">' + (+x.slice(8, 10)) + '</span><span class="c num">' + (oc ? oc + '人' : '·') + '</span></button>';
+    }).join('') + '</div></div></div>' + deptChips();
+  // 白い面: いない人 (終日 → 一部) と 部署ごと
+  var rows = function (arr) { return arr.map(function (x) { return personRow(x.r, x.m, past, x.r.dept + '・' + runText(x.r.mid, d, x.m.tag)); }).join(''); };
+  var h = '<div class="wrap vbody"><div class="td-grid" data-swipe="day"><section class="card plist td-list">'
+    + '<div class="td-lh"><h2>' + (d === t ? '今日' : d === tmr ? '明日' : md(d)) + ' いない人</h2><span class="td-n num">' + list.length + '人</span></div>';
+  if (!list.length) h += emptyHtml(d === t ? '今日は全員そろっています' : d === tmr ? '明日は全員そろっています' : 'この日は全員そろっています');
+  else {
+    if (fullL.length) h += '<div class="td-gl">終日<span class="num">' + fullL.length + '</span></div>' + rows(fullL);
+    if (partL.length) h += '<div class="td-gl">一部・時間指定<span class="num">' + partL.length + '</span></div>' + rows(partL);
+  }
+  h += '</section><section class="td-depts"><div class="td-lh plain"><h2>部署ごと</h2><span class="td-n">押すと名前が出ます</span></div><div class="td-dgrid">' + V.groups.map(function (g) {
+    var a = avail(g.rows, d), pct = a.n ? Math.round(a.ok / a.n * 100) : 0, low = pct < 75;
+    return '<button class="card dt' + (low ? ' low' : '') + (a.ok === a.n ? ' full' : '') + '" data-day="' + d + '"><span class="dn">' + esc(g.dept) + '</span>'
+      + '<span class="dv num"><b>' + a.ok + '</b>/' + a.n + '人</span><span class="db" aria-hidden="true"><i style="width:' + pct + '%"></i></span></button>';
+  }).join('') + '</div></section></div></div>';
+  $('v-today').innerHTML = vhead('vh-today swipe-top', head) + h;
+  keepStrip();
+}
+// 日付の帯: 描き直しても横の位置を保ち、選んだ日が見える所まで送る
+var stripX = 0;
+function keepStrip() {
+  var el = $('tdDays'); if (!el) return;
+  el.scrollLeft = stripX;
+  var b = el.querySelector('[aria-pressed="true"]'); if (!b) return;
+  var l = b.offsetLeft - el.offsetLeft, r = l + b.offsetWidth;
+  if (l < el.scrollLeft || r > el.scrollLeft + el.clientWidth) { el.scrollTo({ left: Math.max(0, l - (el.clientWidth - b.offsetWidth) / 2), behavior: 'smooth' }); }
 }
 
 // ============================================================================
@@ -741,34 +935,33 @@ function renderToday() {
 var monIdx = 0, selDay = '';
 function renderMonth() {
   var mo = D.months[monIdx], t = D.today;
-  if (selDay < mo.first || selDay > mo.last) selDay = (t >= mo.first && t <= mo.last) ? t : mo.first;
+  if (selDay < mo.first || selDay > mo.last || selDay < t) selDay = (t >= mo.first && t <= mo.last) ? t : mo.first;
   var firstDow = (dow(mo.first) + 6) % 7, cells = [];
   for (var i = 0; i < firstDow; i++) cells.push(null);
   for (var d = mo.first; d <= mo.last; d = addDays(d, 1)) cells.push(d);
   var nav = '<div class="vh-row"><div class="vh-title"><small>' + mo.y + '年・' + mo.label + '</small>' + mo.m + '月</div>'
-    + '<button class="rbtn" data-mon="' + (monIdx - 1) + '"' + (monIdx === 0 ? ' disabled' : '') + ' aria-label="前の月">' + IC.chevL + '</button>'
-    + '<button class="rbtn" data-mon="' + (monIdx + 1) + '"' + (monIdx === 2 ? ' disabled' : '') + ' aria-label="次の月">' + IC.chevR + '</button></div>';
+    + '</div>';
   var grid = '<div class="mgrid-dow"><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div><div>日</div></div><div class="mgrid">' + cells.map(function (x) {
     if (!x) return '<span class="mc out"></span>';
-    var grp = {}, oc = outCount(x);
-    V.people.forEach(function (r) { var m = mark(r.mid, x); if (m) grp[TAG[m.tag].grp] = 1; });
-    var dots = ['susp', 'school', 'private', 'pend'].filter(function (g) { return grp[g]; }).map(function (g) { return '<i style="background:' + DOT[g] + (x < t ? ';opacity:.45' : '') + '"></i>'; }).join('');
-    return '<button class="mc' + (x === t ? ' today' : x < t ? ' past' : '') + (x === selDay ? ' picked' : '') + '" data-sel="' + x + '" aria-pressed="' + (x === selDay) + '" aria-label="' + mdj(x) + (oc ? ' いない人' + oc + '人' : '') + '">'
-      + '<span class="n num">' + (+x.slice(8, 10)) + '</span><span class="dots">' + dots + '</span>' + (oc ? '<span class="cnt num">' + oc + '</span>' : '') + '</button>';
+    if (x < t) return '<span class="mc gone" aria-hidden="true"><span class="n num">' + (+x.slice(8, 10)) + '</span></span>';
+    var oc = outCount(x);
+    return '<button class="mc' + (x === t ? ' today' : x < t ? ' past' : '') + (x === selDay ? ' picked' : '') + '" data-sel="' + x + '" aria-pressed="' + (x === selDay) + '" aria-label="' + mdj(x) + (oc ? ' 終日いない人' + oc + '人' : '') + '">'
+      + '<span class="n num">' + (+x.slice(8, 10)) + '</span><span class="oc num">' + (oc ? oc + '人' : '') + '</span></button>';
   }).join('') + '</div>'
-    + '<div class="mlegend">' + ['school', 'private', 'susp', 'pend'].map(function (g) { return '<span><i style="background:' + DOT[g] + '"></i>' + DOT_LB[g] + '</span>'; }).join('') + '<span><i style="background:var(--accent)"></i>数字＝終日いない人</span></div>';
+    + '<div class="mlegend">日付の下の数字＝終日いない人</div>';
+  var cal = '<div data-swipe="month">' + nav + grid + '</div>';
   var wide = !isNarrow() && window.matchMedia('(min-width: 961px)').matches;
-  var panel = '<div class="card plist" id="dayPanel">' + dayPanel(selDay) + '</div>';
+  var panel = '<div class="card plist" id="dayPanel" data-swipe="cday">' + dayPanel(selDay) + '</div>';
   if (wide) {
-    $('v-month').innerHTML = vhead('vh-month', deptChips()) + '<div class="wrap vbody" style="margin-top:16px"><div class="mcal"><div class="mside"><div class="mpanel">' + nav + grid + '</div></div><div>' + panel + '</div></div></div>';
+    $('v-month').innerHTML = vhead('vh-month', deptChips()) + '<div class="wrap vbody" style="margin-top:16px"><div class="mcal"><div class="mside"><div class="mpanel">' + cal + '</div></div><div>' + panel + '</div></div></div>';
   } else {
-    $('v-month').innerHTML = vhead('', nav + grid + deptChips()) + '<div class="wrap vbody">' + panel + '</div>';
+    $('v-month').innerHTML = vhead('', cal + deptChips()) + '<div class="wrap vbody">' + panel + '</div>';
   }
 }
 function dayPanel(d) {
   var past = d < D.today, a = avail(V.rows, d), who = whoOn(d);
   var h = '<div class="dayhead"><b>' + mdj(d) + (d === D.today ? '　今日' : '') + '<small>活動できる ' + a.ok + ' / ' + a.n + '人・予定がある人 ' + who.length + '人</small></b>'
-    + '<div class="daynav"><button data-step="-1" aria-label="前の日">' + IC.chevL + '</button><button data-step="1" aria-label="次の日">' + IC.chevR + '</button></div></div>';
+    + '</div>';
   h += goEntriesOn(d);
   if (!who.length) return h + emptyHtml('この日は全員そろっています');
   var byDept = [], dm = {};
@@ -783,12 +976,13 @@ function dayPanel(d) {
 // 3. メンバー一覧 (メンバー×日付)
 // ============================================================================
 function renderMatrix() {
-  var t = D.today, days = S.days;
-  var head = '<div class="vh-row"><div class="vh-title"><small>3か月分・' + V.people.length + '人</small>メンバー一覧</div>'
+  var t = D.today, days = S.days.filter(function (x) { return x >= t; });
+  var head = '<div class="vh-row"><div class="vh-title"><small>今日から先・' + V.people.length + '人</small>メンバー一覧</div>'
     + '<button class="rbtn" id="mxToday" aria-label="今日へ" title="今日へ" style="width:auto;padding:0 14px;border-radius:20px;font-size:13px;display:inline-flex;gap:4px">今日へ</button></div>' + deptChips();
   var h = '<div class="mx-wrap" id="mxWrap"><table class="mx num"><thead><tr><th class="nm">名前</th>';
   D.months.forEach(function (mo) {
     var n = days.filter(function (d) { return d >= mo.first && d <= mo.last; }).length;
+    if (!n) return;
     h += '<th colspan="' + n + '" class="mstart">' + mo.y + '年' + mo.m + '月</th>';
   });
   var colCls = function (d) { var w = dow(d); return (d === t ? 'tcol' : d < t ? 'past' : w === 6 ? 'sat' : w === 0 ? 'sun' : '') + (d.slice(8) === '01' ? ' mstart' : ''); };
@@ -797,7 +991,7 @@ function renderMatrix() {
   V.groups.forEach(function (g) {
     h += '<tr class="gr"><td class="nm" title="活動できる人数">' + esc(g.dept) + '<span>' + g.rows.length + '人</span></td>' + days.map(function (d) {
       var a = avail(g.rows, d), hc = heat(a.n ? a.ok / a.n : 1), past = d < t;
-      return '<td class="' + (d.slice(8) === '01' ? 'mstart' : '') + '" data-day="' + d + '" style="cursor:pointer;' + (past ? 'background:#ECEFF2;color:#A7B0BA;font-weight:400' : 'background:' + hc.bg + ';color:' + hc.fg) + '" title="' + esc(g.dept + '　' + mdw(d) + '　活動できる ' + a.ok + ' / ' + a.n + '人') + '">' + a.ok + '</td>';
+      return '<td class="' + (d.slice(8) === '01' ? 'mstart' : '') + '" data-day="' + d + '" style="cursor:pointer;' + (past ? 'background:var(--n-100);color:var(--past-ink);font-weight:400' : 'background:' + hc.bg + ';color:' + hc.fg) + '" title="' + esc(g.dept + '　' + mdw(d) + '　活動できる ' + a.ok + ' / ' + a.n + '人') + '">' + a.ok + '</td>';
     }).join('') + '</tr>';
     g.rows.forEach(function (r) {
       h += '<tr><td class="nm" title="' + esc(r.name + '　' + r.dept + '　' + r.role) + '">' + esc(r.name) + (r.multi ? '<span class="r">兼</span>' : '') + '<span class="r">' + esc(r.role) + '</span></td>';
@@ -1049,7 +1243,7 @@ function renderRequests() {
     D.requests.forEach(function (x) {
       var p = x.status === 'pending', days = daysBetween(x.from, x.until) + 1, now = x.from <= D.today;
       h += '<div class="card rq"><div class="rq-top">' + avHtml(nameOf(x.mid), p ? '休?' : '休') + '<div class="pm"><b>' + esc(nameOf(x.mid)) + '</b><small>' + esc(deptOf(x.mid)) + '</small></div>'
-        + (p ? '<span class="pill" style="background:var(--accent-50);color:#A04A17">承認待ち</span>' : '<span class="pill" style="background:var(--blue-50);color:var(--blue-d)">' + (now ? '休会中' : '承認済み') + '</span>') + '</div>'
+        + (p ? '<span class="pill" style="background:var(--accent-50);color:var(--accent-ink)">承認待ち</span>' : '<span class="pill" style="background:var(--pri-50);color:var(--pri-d)">' + (now ? '休会中' : '承認済み') + '</span>') + '</div>'
         + '<div class="meta"><div>期間<b class="num">' + md(x.from) + '〜' + md(x.until) + '</b>' + days + '日</div><div>活動<b>' + esc(x.mode || '—') + '</b></div>'
         + '<div>申請<b class="num">' + (x.requested ? md(x.requested) : '—') + '</b>' + esc(x.via) + 'から</div></div></div>';
     });
@@ -1082,6 +1276,27 @@ function openDay(d) {
   });
   openSheet(mdj(d) + (d === D.today ? '　今日' : ''), goEntriesOn(d) + h + '</div>', d >= D.today ? '<button class="btn pri" data-addon="' + d + '">この日に予定を追加</button>' : '');
 }
+// ---- 画面の色 (テーマ)。この端末だけに保存 ----
+function openTheme() {
+  var cur = Theme.current();
+  var own = cur.id === 'custom' ? cur : { pri: '#3A4745', acc: '#B3A393', bg: '#F5F1EC' };
+  var h = '<div class="sheet-sec">配色を選ぶ</div><div class="th-grid">' + THEMES.map(function (t) {
+    return '<button class="th" data-theme="' + t.id + '" aria-pressed="' + (cur.id === t.id) + '"><span class="sw" aria-hidden="true">' + t.sw.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('') + '</span>'
+      + '<b>' + esc(t.name) + '</b><small>' + esc(t.kw) + '</small></button>';
+  }).join('') + '</div>'
+    + '<div class="sheet-sec">自分で作る</div><div class="th-own"><div class="row">'
+    + '<label>メイン<input type="color" data-own="pri" value="' + own.pri + '"></label>'
+    + '<label>アクセント<input type="color" data-own="acc" value="' + own.acc + '"></label>'
+    + '<label>背景<input type="color" data-own="bg" value="' + own.bg + '"></label></div>'
+    + '<div class="field help">文字が読みにくくならないよう、濃さは自動で調整されます。色はこの端末だけに保存されます。</div></div>';
+  openSheet('画面の色', h);
+}
+function ownTheme() {
+  var v = {}; Array.prototype.forEach.call(document.querySelectorAll('[data-own]'), function (el) { v[el.getAttribute('data-own')] = el.value.toUpperCase(); });
+  Theme.set({ id: 'custom', name: 'カスタム', pri: v.pri, acc: v.acc, bg: v.bg });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-theme]'), function (b) { b.setAttribute('aria-pressed', 'false'); });
+}
+
 function openLegend() {
   var h = '<div class="sheet-sec">色と記号</div>' + Object.keys(TAG).map(function (k) {
     var t = TAG[k]; return '<div class="lg-row">' + tagHtml(k, false, k + '　' + t.short) + '<span>' + esc(t.label) + '<small>' + (t.full ? 'いない（活動できる人数から除く）' : '一部いない（活動できる人数に含める）') + '</small></span></div>';
@@ -1138,14 +1353,14 @@ function start() {
   if (!A) initAdjust();
   build(); applyFilter(); drawTabs();
   $('upd').textContent = '更新 ' + (D.served || '');
-  $('fabAdd').hidden = false; document.querySelector('.botnav').hidden = false;
+  document.querySelector('.botnav').hidden = false; $('dial').hidden = false;
   rendered = {};
   show(cur);
 }
 
 // ---- ログイン (Console と同じ ID・パスワード) ----
 function showLogin(msg) {
-  document.querySelector('.appbar').hidden = true; document.querySelector('.botnav').hidden = true; $('fabAdd').hidden = true;
+  document.querySelector('.appbar').hidden = true; document.querySelector('.botnav').hidden = true; $('dial').hidden = true; dial(false);
   document.querySelector('main').innerHTML = '<div class="login"><form class="login-card" id="loginForm" autocomplete="on"><div class="logo-mk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="4"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8.5 14.5l2 2 4-4"/></svg></div>'
     + '<h1>空き状況</h1><p>connec+a Console と同じ ID・パスワードでログインしてください。マネージャー以上の人が使えます。</p>'
     + '<div class="field"><span class="lb">ID またはメールアドレス</span><input class="inp" name="username" id="lgId" autocomplete="username" required></div>'
@@ -1213,7 +1428,7 @@ function saveAdd() {
 function goEntriesOn(d) {
   var list = (D.goEntries || []).filter(function (e) { return e.sd <= d && d <= e.ed && (!V.on || V.seen[e.mid]); });
   if (!list.length) return '';
-  return '<div class="grp" style="border-radius:0;background:var(--accent-50);color:#8A3A10">この画面から追加した予定<span class="sp"></span><span style="font-weight:400">取り消せます</span></div>' + list.map(function (e) {
+  return '<div class="grp" style="border-radius:0;background:var(--accent-50);color:var(--accent-ink)">この画面から追加した予定<span class="sp"></span><span style="font-weight:400">取り消せます</span></div>' + list.map(function (e) {
     var when = (e.sd === e.ed ? md(e.sd) : md(e.sd) + '〜' + md(e.ed)) + (e.allDay ? ' 終日' : ' ' + hm(e.sm) + '〜' + hm(Math.min(e.em, 1439)));
     return '<div class="goe">' + avHtml(nameOf(e.mid), e.kind === 'school' ? '学' : '私') + '<div class="pm"><b>' + esc(nameOf(e.mid)) + '　' + (e.kind === 'school' ? '学校・テスト' : '私用') + '</b><small>' + esc(when + (e.note ? '・' + e.note : '') + (e.by ? '・登録 ' + nameOf(e.by) : '')) + '</small></div>'
       + '<button class="btn sm danger" data-del="' + esc(e.id) + '">取り消す</button></div>';
@@ -1236,20 +1451,13 @@ function delEntry(btn) {
 // ============================================================================
 document.addEventListener('click', function (e) {
   var el;
+  if ((el = e.target.closest('[data-theme]'))) { Theme.set({ id: el.getAttribute('data-theme') }); pressIn(el); return; }
   if ((el = e.target.closest('[data-tab]'))) { closeSheet(); show(el.getAttribute('data-tab')); return; }
   if ((el = e.target.closest('[data-dept]'))) { F.dept = el.getAttribute('data-dept'); store('filter', F); refreshViews(); return; }
-  if ((el = e.target.closest('[data-wday]'))) { daySel = el.getAttribute('data-wday'); renderToday(); return; }
-  if ((el = e.target.closest('[data-mon]'))) { if (!el.disabled) { monIdx = +el.getAttribute('data-mon'); renderMonth(); } return; }
-  if ((el = e.target.closest('[data-sel]'))) { selDay = el.getAttribute('data-sel'); renderMonth(); return; }
-  if ((el = e.target.closest('[data-step]'))) {
-    var nd = addDays(selDay, +el.getAttribute('data-step'));
-    if (nd >= D.months[0].first && nd <= D.months[2].last) {
-      selDay = nd;
-      D.months.forEach(function (mo, i) { if (nd >= mo.first && nd <= mo.last) monIdx = i; });
-      renderMonth();
-    }
-    return;
-  }
+  if ((el = e.target.closest('[data-wday]'))) { var wd = el.getAttribute('data-wday'), wdir = wd > daySel ? 1 : -1; if (wd === daySel) return; daySel = wd; renderToday(); slideIn('day', wdir); return; }
+  if ((el = e.target.closest('[data-mon]'))) { if (!el.disabled) { swipeGo('month', +el.getAttribute('data-mon') > monIdx ? 1 : -1); } return; }
+  if ((el = e.target.closest('[data-sel]'))) { var sd = el.getAttribute('data-sel'), sdir = sd > selDay ? 1 : -1; if (sd === selDay) return; selDay = sd; renderMonth(); slideIn('cday', sdir); return; }
+  if ((el = e.target.closest('[data-step]'))) { if (!el.disabled) swipeGo('cday', +el.getAttribute('data-step')); return; }
   if ((el = e.target.closest('[data-mode]'))) { findMode = el.getAttribute('data-mode'); store('findMode', findMode); renderFind(); return; }
   if ((el = e.target.closest('[data-qb]'))) { var kq = el.getAttribute('data-qb'); Q[kq] = el.getAttribute('data-v'); if (kq === 'band') $('qTimes').hidden = Q.band !== '時間指定'; pressIn(el); runSearch(); return; }
   if ((el = e.target.closest('[data-ab]'))) { A[el.getAttribute('data-ab')] = el.getAttribute('data-v'); pressIn(el); runAdjust(); return; }
@@ -1263,13 +1471,103 @@ document.addEventListener('click', function (e) {
   if (e.target.closest('#copyLine')) { copyText($('lineText').value); return; }
   if ((el = e.target.closest('[data-addon]'))) { ADD = null; var dd = el.getAttribute('data-addon'); openAdd({ start: dd, end: dd }); return; }
   if ((el = e.target.closest('[data-addb]'))) { var ka = el.getAttribute('data-addb'); ADD[ka] = ka === 'allDay' ? !!el.getAttribute('data-v') : el.getAttribute('data-v'); ADD.keep = true; drawAdd(); return; }
-  if (e.target.closest('#btnAdd') || e.target.closest('#fabAdd')) { openAdd(); return; }
+  if (e.target.closest('#dialBtn')) { dial(!$('dial').classList.contains('open')); return; }
+  if (e.target.closest('#dialScrim')) { dial(false); return; }
+  if ((el = e.target.closest('[data-dial]'))) { var dk = el.getAttribute('data-dial'); dial(false); if (dk === 'find') { closeSheet(); show('find'); } else { ADD = null; openAdd({ kind: dk }); } return; }
   if (e.target.closest('#addSave')) { saveAdd(); return; }
   if (e.target.closest('#addCancel')) { closeSheet(); return; }
   if ((el = e.target.closest('[data-del]'))) { delEntry(el); return; }
   if (e.target.closest('#btnLogout')) { logout(''); return; }
   if ((el = e.target.closest('[data-day]'))) { openDay(el.getAttribute('data-day')); return; }
 });
+// ============================================================================
+// スワイプ (指で左右になぞる)。data-swipe の場所ごとに「次へ / 前へ」を決める
+// ============================================================================
+var TAB_ORDER = ['today', 'month', 'matrix', 'find', 'requests'];
+function lastDay() { return S.days[S.days.length - 1]; }
+function clampDay(d) { return d < D.today ? D.today : d > lastDay() ? lastDay() : d; }
+function swipeNext(kind, dir) {
+  if (kind === 'day' || kind === 'week') { var nd = clampDay(addDays(daySel, dir * (kind === 'week' ? 7 : 1))); return nd !== daySel ? nd : null; }
+  if (kind === 'cday') { var nc = clampDay(addDays(selDay, dir)); return nc !== selDay ? nc : null; }
+  if (kind === 'month') { var nm = monIdx + dir; return nm >= 0 && nm < D.months.length ? nm : null; }
+  if (kind === 'tab') { var nt = TAB_ORDER[TAB_ORDER.indexOf(cur) + dir]; return nt || null; }
+  return null;
+}
+// なぞっている間に出す行き先
+function peekText(kind, nx) {
+  if (nx == null) return kind === 'tab' ? 'ここが端です' : 'これより先はありません';
+  if (kind === 'month') return D.months[nx].y + '年' + D.months[nx].m + '月';
+  if (kind === 'tab') return TABS.filter(function (t) { return t.id === nx; })[0].long;
+  var rel = nx === D.today ? '今日 ' : nx === addDays(D.today, 1) ? '明日 ' : '';
+  return (kind === 'week' ? '1週間 · ' : '') + rel + mdw(nx);
+}
+// なぞった場所と、一緒に動かす場所
+function swipeMoving(kind, zone) {
+  if (kind === 'tab') return $('v-' + cur);
+  if (kind === 'week') return document.querySelector('[data-swipe="day"]');
+  return zone;
+}
+function swipeGo(kind, dir) {
+  var nx = swipeNext(kind, dir);
+  if (nx == null) return false;
+  if (kind === 'day' || kind === 'week') { daySel = nx; renderToday(); slideIn('day', dir); return true; }
+  if (kind === 'cday') { selDay = nx; D.months.forEach(function (mo, i) { if (nx >= mo.first && nx <= mo.last) monIdx = i; }); renderMonth(); slideIn('cday', dir); return true; }
+  if (kind === 'month') { monIdx = nx; renderMonth(); slideIn('month', dir); slideIn('cday', dir); return true; }
+  if (kind === 'tab') { closeSheet(); show(nx); slideEl($('v-' + nx), dir); return true; }
+  return false;
+}
+// 新しい中身を、進んだ向きから滑り込ませる
+function slideIn(kind, dir) { slideEl(document.querySelector('[data-swipe="' + kind + '"]'), dir); }
+function slideEl(el, dir) {
+  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  el.classList.remove('slide'); el.style.transform = 'translateX(' + (dir * 56) + 'px)'; el.style.opacity = '0';
+  void el.offsetWidth;
+  el.classList.add('slide'); el.style.transform = ''; el.style.opacity = '';
+}
+(function () {
+  var z = null, mv = null, kind = '', x0 = 0, y0 = 0, dx = 0, lock = '', peek = $('peek');
+  document.addEventListener('touchstart', function (e) {
+    var el = e.target.closest('[data-swipe]');
+    z = null;
+    if (!el || e.touches.length > 1 || e.target.closest('.td-days, .mx-wrap, .dchips, input, select, textarea, .sheet')) return;
+    z = el; kind = el.getAttribute('data-swipe'); mv = swipeMoving(kind, el);
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; dx = 0; lock = '';
+  }, { passive: true });
+  document.addEventListener('touchmove', function (e) {
+    if (!z) return;
+    var mx = e.touches[0].clientX - x0, my = e.touches[0].clientY - y0;
+    if (!lock) { if (Math.abs(mx) < 10 && Math.abs(my) < 10) return; lock = Math.abs(mx) > Math.abs(my) * 1.2 ? 'x' : 'y'; }
+    if (lock !== 'x') { z = null; return; }
+    dx = mx;
+    var nx = swipeNext(kind, dx < 0 ? 1 : -1), far = Math.min(1, Math.abs(dx) / 56);
+    if (mv) { mv.classList.remove('slide'); mv.style.transform = 'translateX(' + (nx != null ? dx : dx / 5) + 'px)'; mv.style.opacity = String(1 - Math.min(0.5, Math.abs(dx) / 600)); }
+    peek.textContent = (dx < 0 ? '' : '‹ ') + peekText(kind, nx) + (dx < 0 ? ' ›' : '');
+    peek.classList.toggle('no', nx == null); peek.classList.add('on'); peek.style.opacity = String(0.35 + far * 0.65);
+  }, { passive: true });
+  function end() {
+    peek.classList.remove('on'); peek.style.opacity = '';
+    if (!z) return;
+    var dir = dx < 0 ? 1 : -1, m = mv; z = null;
+    if (lock === 'x' && Math.abs(dx) > 56 && swipeGo(kind, dir)) { if (m && m.isConnected && kind === 'tab') { m.style.transform = ''; m.style.opacity = ''; } return; }
+    if (m) { m.classList.add('slide'); m.style.transform = ''; m.style.opacity = ''; }
+  }
+  document.addEventListener('touchend', end);
+  document.addEventListener('touchcancel', end);
+  // 日付の帯: 横の位置を覚える / PC はホイールで横に送る
+  document.addEventListener('scroll', function (e) { if (e.target.id === 'tdDays') stripX = e.target.scrollLeft; }, true);
+  document.addEventListener('wheel', function (e) {
+    var el = e.target.closest && e.target.closest('#tdDays');
+    if (!el || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    el.scrollLeft += e.deltaY; e.preventDefault();
+  }, { passive: false });
+})();
+function dial(open) {
+  var d = $('dial'); if (!d) return;
+  d.classList.toggle('open', open); $('dialScrim').classList.toggle('on', open);
+  $('dialBtn').setAttribute('aria-expanded', String(open)); $('dialBtn').setAttribute('aria-label', open ? '閉じる' : '予定を追加');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-dial]'), function (b) { b.tabIndex = open ? 0 : -1; });
+  if (open) setTimeout(function () { var f = document.querySelector('[data-dial]'); if (f) f.focus(); }, 60);
+}
 function pressIn(el) { Array.prototype.forEach.call(el.parentNode.children, function (b) { b.setAttribute('aria-pressed', b === el); }); }
 document.addEventListener('change', function (e) {
   var el = e.target;
@@ -1284,6 +1582,7 @@ document.addEventListener('change', function (e) {
   if (el.hasAttribute('data-a')) { var ka = el.getAttribute('data-a'); A[ka] = el.type === 'checkbox' ? el.checked : el.value; runAdjust(); return; }
 });
 document.addEventListener('input', function (e) {
+  if (e.target.hasAttribute && e.target.hasAttribute('data-own')) { ownTheme(); return; }
   if (e.target.getAttribute && e.target.getAttribute('data-add') === 'note') { ADD.note = e.target.value; ADD.keep = true; return; }
   if (e.target.getAttribute && e.target.getAttribute('data-a') === 'title') { A.title = e.target.value; clearTimeout(runAdjust.t); runAdjust.t = setTimeout(runAdjust, 250); }
 });
@@ -1300,9 +1599,16 @@ function unpick(id, mid) {
 }
 $('btnReload').addEventListener('click', function () { reload(false); });
 $('btnLegend').addEventListener('click', openLegend);
+$('btnTheme').addEventListener('click', openTheme);
 $('scrim').addEventListener('click', closeSheet);
 $('sheetX').addEventListener('click', closeSheet);
-document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') { if ($('dial').classList.contains('open')) { dial(false); $('dialBtn').focus(); } else closeSheet(); return; }
+  if ((e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') || !D || $('sheet').classList.contains('on') || e.target.closest('input, select, textarea, .td-days, .mx-wrap')) return;
+  var dir = e.key === 'ArrowRight' ? 1 : -1;
+  if (cur === 'today') swipeGo(e.shiftKey ? 'week' : 'day', dir);
+  else if (cur === 'month') swipeGo(e.shiftKey ? 'month' : 'cday', dir);
+});
 // 下から出るパネルは、上の部分を下へなぞると閉じる
 (function () {
   var sh = $('sheet'), y0 = null, dy = 0;
