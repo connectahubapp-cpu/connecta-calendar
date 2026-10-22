@@ -1,0 +1,4 @@
+server/*.db
+server/*.db-*
+server/server
+server/*.exe
